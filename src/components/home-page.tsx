@@ -6,6 +6,7 @@ import { catalogProducts } from '../data/catalog';
 import { ProductCard } from './product-card';
 import { HeroSection } from './hero-section';
 import { businessFacts } from '../data/business-facts';
+import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button';
 
 export function HomePage() {
   const topProducts = catalogProducts.slice(0, 4);
@@ -289,21 +290,20 @@ export function HomePage() {
             </div>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full md:w-auto">
+              <InteractiveHoverButton
+                text="Ver Catálogo Completo"
+                href="/catalogo"
+                className="h-14 px-8 text-base font-bold shadow-xl bg-white text-[var(--text-main)] w-full sm:w-auto"
+              />
               <a
                 href={businessFacts.whatsappUrl.value}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="button button-primary h-14 text-base px-8 shadow-xl text-center"
+                className="button h-14 text-sm px-6 bg-white/10 hover:bg-[#25D366] text-white border border-white/20 hover:border-transparent text-center flex items-center justify-center gap-2 transition-all duration-300 rounded-full font-bold"
               >
                 <span>Consultar por WhatsApp</span>
-                <span>↗</span>
+                <span className="text-base">↗</span>
               </a>
-              <Link
-                href="/catalogo"
-                className="button h-14 text-sm px-6 bg-white/10 hover:bg-white/20 text-white border border-white/20 text-center"
-              >
-                Ver Catálogo Completo
-              </Link>
             </div>
           </div>
         </div>

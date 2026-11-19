@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { HeroSection } from '@/components/ui/hero-section-2';
+import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button';
 
 export default function HeroSectionDemo() {
   return (
@@ -31,6 +32,14 @@ export default function HeroSectionDemo() {
           address: "Pasteur 367, Once, CABA",
         }}
       />
+    </div>
+  );
+}
+
+export function InteractiveHoverButtonDemo() {
+  return (
+    <div className="relative flex justify-center p-8">
+      <InteractiveHoverButton text="Ver catálogo" />
     </div>
   );
 }

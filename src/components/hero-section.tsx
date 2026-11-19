@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import { businessFacts } from '../data/business-facts';
+import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button';
 
 // Icon component for contact details (shadcn / 21st.dev style)
 const InfoIcon = ({ type }: { type: 'website' | 'phone' | 'address' }) => {
@@ -145,25 +146,24 @@ export function HeroSection() {
               {businessFacts.description.value}
             </motion.p>
 
-            {/* Botones de Acción */}
+            {/* Botones de Acción con Interactive Hover Button */}
             <motion.div
               variants={itemVariants}
-              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mb-6 sm:mb-8"
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-4 mb-6 sm:mb-8"
             >
-              <Link
+              <InteractiveHoverButton
+                text="Explorar catálogo"
                 href="/catalogo"
-                className="button button-primary h-[54px] sm:h-[56px] text-base sm:text-lg font-bold shadow-md w-full sm:w-auto text-center"
-              >
-                Explorar catálogo
-              </Link>
+                className="w-full sm:w-[230px] h-[54px] sm:h-[56px] text-base font-bold shadow-md"
+              />
               <a
                 href={businessFacts.whatsappUrl.value}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="button button-secondary h-[50px] sm:h-[54px] text-sm sm:text-base font-bold w-full sm:w-auto flex items-center justify-center gap-2"
+                className="group relative inline-flex items-center justify-center cursor-pointer overflow-hidden rounded-full border border-emerald-600/30 bg-white/95 hover:bg-[#25D366] text-[var(--text-main)] hover:text-white px-6 py-3 h-[52px] sm:h-[56px] text-center font-bold text-sm sm:text-base shadow-sm transition-all duration-300 w-full sm:w-auto gap-2 active:scale-[0.98]"
               >
                 <svg
-                  className="w-5 h-5 text-[#25D366] flex-shrink-0"
+                  className="w-5 h-5 text-[#25D366] group-hover:text-white transition-colors duration-300 flex-shrink-0"
                   width="20"
                   height="20"
                   fill="currentColor"
