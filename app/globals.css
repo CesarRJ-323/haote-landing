@@ -1,5 +1,176 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-:root{--ink:#15243b;--muted:#667085;--paper:#f7f4ee;--surface:#fffdf9;--line:#ded8ce;--coral:#ef745f;--sun:#f2c75b;--mint:#a5d8cc;--blue:#a7c8e6;--ease:cubic-bezier(.23,1,.32,1)}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Nunito,sans-serif}a{text-decoration:none;color:inherit}button,input{font:inherit}.page-shell{max-width:1240px;margin:0 auto;padding:0 28px}.display{font-family:Fredoka,sans-serif;letter-spacing:-.04em}.eyebrow{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--coral)}.section{padding:112px 0}.button{display:inline-flex;align-items:center;gap:10px;border:0;border-radius:999px;padding:14px 20px;font-weight:700;cursor:pointer;transition:transform .18s var(--ease),background .18s ease,box-shadow .18s ease}.button-primary{background:var(--ink);color:#fff}.button-primary:hover{transform:translateY(-2px);box-shadow:0 12px 24px #15243b22}.button-secondary{background:var(--surface);border:1px solid var(--line)}.button:active{transform:translateY(1px) scale(.98)}:focus-visible{outline:3px solid var(--coral);outline-offset:4px}.reveal{opacity:0;transform:translateY(18px)}.reveal.is-visible{opacity:1;transform:none;transition:opacity .7s var(--ease),transform .7s var(--ease)}.product-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;overflow:hidden;transition:transform .22s var(--ease),box-shadow .22s var(--ease)}.product-card:hover{transform:translateY(-4px);box-shadow:0 18px 30px #15243b12}.product-card img{transition:transform .35s var(--ease)}.product-card:hover img{transform:scale(1.03)}@media(max-width:700px){.page-shell{padding:0 18px}.section{padding:76px 0}.desktop-only{display:none!important}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}}
+
+:root {
+  /* 60% — Superficies (Un solo set de neutros armónicos) */
+  --bg-canvas:  #F9F6F0;
+  --bg-surface: #FFFFFF;
+  --bg-subtle:  #F0ECE1;
+
+  /* 30% — Estructura y Texto */
+  --text-main:   #111E31;  /* 14.2:1 AAA sobre crema */
+  --text-muted:  #55657E;  /* 5.49:1 AA sobre crema, 5.92:1 sobre blanco */
+  --border-line: #DCD5C9;
+  --bg-ink:      #111E31;
+
+  /* 10% — Acentos */
+  --accent-coral-brand:   #E3533B; /* Decorativo y elementos grandes */
+  --accent-coral-action:  #C9412B; /* Fondo de botones (blanco 4.91:1 AA) */
+  --accent-coral-hover:   #A93320; /* Hover/active de botones */
+  --accent-coral-text:    #A93320; /* Texto coral sobre fondos claros (6.12:1 AA) */
+  --accent-coral-on-dark: #EF745F; /* Texto coral sobre navy (5.85:1 AA) */
+  --accent-sun:           #F5B738; /* Badges con texto --text-main (9.34:1) */
+
+  /* Curvas y transiciones físicas */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-canvas);
+  color: var(--text-main);
+  font-family: Nunito, system-ui, -apple-system, sans-serif;
+  overflow-x: clip;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button, input, select {
+  font: inherit;
+}
+
+/* Tipografía de marca */
+.font-heading, .display {
+  font-family: Fredoka, sans-serif;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--accent-coral-text);
+}
+
+.eyebrow-dark {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--accent-coral-on-dark);
+}
+
+/* Contenedores y Layout */
+.page-shell {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 clamp(18px, 4vw, 36px);
+}
+
+.section {
+  padding: clamp(56px, 8vw, 96px) 0;
+}
+
+/* Firma de Marca: Corte Diagonal de 8° */
+.cut-angle {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 24px), 0 100%);
+}
+
+.cut-angle-hero {
+  clip-path: polygon(12% 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+@media (max-width: 768px) {
+  .cut-angle-hero {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 16px), 0 100%);
+  }
+}
+
+/* Botones Base */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 9999px;
+  padding: 0 24px;
+  height: 48px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.16s var(--ease), background-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.button:active {
+  transform: scale(0.97);
+}
+
+.button-primary {
+  background-color: var(--accent-coral-action);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 2px 8px rgba(201, 65, 43, 0.25);
+}
+
+.button-primary:hover {
+  background-color: var(--accent-coral-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(201, 65, 43, 0.35);
+}
+
+.button-secondary {
+  background-color: transparent;
+  color: var(--text-main);
+  border: 1.5px solid var(--text-main);
+}
+
+.button-secondary:hover {
+  background-color: rgba(17, 30, 49, 0.05);
+  transform: translateY(-1px);
+}
+
+.button-whatsapp {
+  background-color: var(--bg-ink);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.button-whatsapp:hover {
+  background-color: #0b1422;
+  transform: translateY(-1px);
+}
+
+/* Accesibilidad Focus */
+:focus-visible {
+  outline: 3px solid var(--accent-coral-action);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

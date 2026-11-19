@@ -1,5 +1,161 @@
 'use client';
+
 import { useMemo, useState } from 'react';
 import { catalogCategories, catalogProducts } from '../data/catalog';
 import { ProductCard } from './product-card';
-export function CatalogPage(){const [query,setQuery]=useState('');const [category,setCategory]=useState('Todos');const [sort,setSort]=useState('featured');const filtered=useMemo(()=>catalogProducts.filter(p=>(category==='Todos'||p.category===category)&&p.name.toLowerCase().includes(query.toLowerCase())).sort((a,b)=>sort==='price-low'?a.price-b.price:sort==='price-high'?b.price-a.price:0),[query,category,sort]);return <main className="catalog-page"><div className="page-shell"><div className="catalog-head"><div><div className="eyebrow">Catálogo mayorista</div><h1 className="display">Todo lo que<br/><em>se mueve.</em></h1></div><p>Explorá la selección Haote por categoría, buscá un personaje o encontrá tu próxima compra.</p></div><div className="catalog-toolbar"><label className="search"><span>⌕</span><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="¿Qué estás buscando?" aria-label="Buscar productos"/></label><label className="sort-label">Ordenar por<select value={sort} onChange={e=>setSort(e.target.value)}><option value="featured">Destacados</option><option value="price-low">Precio menor</option><option value="price-high">Precio mayor</option></select></label></div><div className="catalog-layout"><aside className="catalog-sidebar"><h2 className="display">Categorías</h2>{catalogCategories.map(item=><button key={item} className={category===item?'active':''} onClick={()=>setCategory(item)}>{item}<span>{item==='Todos'?catalogProducts.length:catalogProducts.filter(p=>p.category===item).length}</span></button>)}</aside><section className="catalog-results"><div className="result-line"><span>{filtered.length} productos</span><span>{category==='Todos'?'Catálogo completo':category}</span></div>{filtered.length?<div className="product-grid">{filtered.map(p=><ProductCard key={p.id} product={p}/>)}</div>:<div className="empty"><h2 className="display">No encontramos ese producto.</h2><p>Probá con otra búsqueda o volvé a ver todas las categorías.</p><button className="button button-primary" onClick={()=>{setQuery('');setCategory('Todos')}}>Ver todo el catálogo</button></div>}</section></div></div><style jsx>{`.catalog-page{padding:80px 0 120px}.catalog-head{display:flex;justify-content:space-between;gap:40px;align-items:end;border-bottom:1px solid var(--line);padding-bottom:56px}.catalog-head h1{font-size:clamp(4rem,8vw,7.5rem);line-height:.83;margin:20px 0 0}.catalog-head h1 em{font-style:normal;color:var(--coral)}.catalog-head>p{max-width:360px;color:var(--muted);line-height:1.6;margin-bottom:8px}.catalog-toolbar{display:flex;justify-content:space-between;gap:20px;align-items:center;padding:24px 0}.search{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:0 15px;width:min(100%,480px);height:48px}.search span{font-size:26px;color:var(--coral)}.search input{border:0;outline:0;background:transparent;width:100%;color:var(--ink)}.sort-label{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:13px}.sort-label select{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;color:var(--ink)}.catalog-layout{display:grid;grid-template-columns:210px 1fr;gap:36px}.catalog-sidebar{border-top:2px solid var(--ink);padding-top:16px}.catalog-sidebar h2{font-size:30px;margin:0 0 20px}.catalog-sidebar button{display:flex;justify-content:space-between;width:100%;border:0;border-bottom:1px solid var(--line);background:transparent;padding:13px 0;text-align:left;color:var(--muted);cursor:pointer}.catalog-sidebar button span{font-size:12px}.catalog-sidebar button.active{color:var(--coral);font-weight:700}.result-line{display:flex;justify-content:space-between;color:var(--muted);font-size:13px;margin-bottom:18px}.empty{padding:90px 25px;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:20px}.empty h2{font-size:48px;margin:0 0 14px}.empty p{color:var(--muted);margin-bottom:28px}@media(max-width:700px){.catalog-page{padding-top:55px}.catalog-head{display:block;padding-bottom:35px}.catalog-head h1{font-size:4rem}.catalog-head>p{margin-top:28px}.catalog-toolbar{display:block}.search{width:100%}.sort-label{margin-top:12px;justify-content:space-between}.sort-label select{flex:1}.catalog-layout{grid-template-columns:1fr;gap:22px}.catalog-sidebar{display:flex;gap:8px;overflow:auto;border-top:0;padding:0}.catalog-sidebar h2{display:none}.catalog-sidebar button{white-space:nowrap;width:auto;border:1px solid var(--line);border-radius:99px;padding:10px 13px}.catalog-sidebar button span{display:none}.catalog-sidebar button.active{background:var(--coral);color:#fff;border-color:var(--coral)}.result-line{margin-top:4px}.empty h2{font-size:36px}}`}</style></main>}
+
+export function CatalogPage() {
+  const [query, setQuery] = useState('');
+  const [category, setCategory] = useState('Todos');
+  const [sort, setSort] = useState('featured');
+
+  const filtered = useMemo(
+    () =>
+      catalogProducts
+        .filter(
+          (p) =>
+            (category === 'Todos' || p.category === category) &&
+            p.name.toLowerCase().includes(query.toLowerCase())
+        )
+        .sort((a, b) =>
+          sort === 'price-low'
+            ? a.price - b.price
+            : sort === 'price-high'
+            ? b.price - a.price
+            : 0
+        ),
+    [query, category, sort]
+  );
+
+  return (
+    <main className="py-8 sm:py-12 bg-[var(--bg-canvas)]">
+      <div className="page-shell">
+        {/* Cabecera del Catálogo */}
+        <div className="pb-8 mb-8 border-b border-[var(--border-line)] flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div>
+            <span className="eyebrow block mb-2">Catálogo Mayorista</span>
+            <h1 className="font-heading text-3xl sm:text-5xl font-bold text-[var(--text-main)] leading-tight">
+              Stock Mayorista en Once
+            </h1>
+          </div>
+          <p className="text-sm sm:text-base text-[var(--text-muted)] max-w-[420px] leading-relaxed">
+            Explorá nuestra selección por categoría, buscá por personaje o armá tu pedido directo por bulto cerrado.
+          </p>
+        </div>
+
+        {/* Barra de Búsqueda y Orden */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+          <div className="relative w-full sm:max-w-md">
+            <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--text-muted)] text-base">
+              ⌕
+            </span>
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Buscar por personaje, juguete o categoría..."
+              className="w-full h-11 pl-9 pr-4 rounded-xl border border-[var(--border-line)] bg-white text-sm text-[var(--text-main)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-coral-action)]"
+              aria-label="Buscar productos"
+            />
+          </div>
+
+          <div className="flex items-center gap-3">
+            <label htmlFor="sort-select" className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
+              Ordenar por:
+            </label>
+            <select
+              id="sort-select"
+              value={sort}
+              onChange={(e) => setSort(e.target.value)}
+              className="h-10 px-3 rounded-lg border border-[var(--border-line)] bg-white text-xs font-bold text-[var(--text-main)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-coral-action)]"
+            >
+              <option value="featured">Destacados</option>
+              <option value="price-low">Precio: menor a mayor</option>
+              <option value="price-high">Precio: mayor a menor</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Layout Catálogo: Sidebar de Categorías + Grilla */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* Categorías (Pills en móvil, Sidebar en desktop) */}
+          <aside className="lg:col-span-3">
+            <div className="sticky top-20">
+              <h2 className="hidden lg:block font-heading text-lg font-bold text-[var(--text-main)] mb-3 pb-2 border-b border-[var(--border-line)]">
+                Categorías
+              </h2>
+              <div className="flex lg:flex-col gap-2 overflow-x-auto pb-2 lg:pb-0 scrollbar-none">
+                {catalogCategories.map((item) => {
+                  const isActive = category === item;
+                  const count =
+                    item === 'Todos'
+                      ? catalogProducts.length
+                      : catalogProducts.filter((p) => p.category === item).length;
+
+                  return (
+                    <button
+                      key={item}
+                      type="button"
+                      onClick={() => setCategory(item)}
+                      className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap text-left ${
+                        isActive
+                          ? 'bg-[var(--accent-coral-action)] text-white shadow-sm'
+                          : 'bg-white lg:bg-transparent border lg:border-0 border-[var(--border-line)] text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-white'
+                      }`}
+                    >
+                      <span>{item}</span>
+                      <span
+                        className={`ml-2 px-2 py-0.5 rounded-full text-[10px] ${
+                          isActive
+                            ? 'bg-white/20 text-white'
+                            : 'bg-[var(--bg-subtle)] text-[var(--text-muted)]'
+                        }`}
+                      >
+                        {count}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </aside>
+
+          {/* Grilla de Resultados */}
+          <section className="lg:col-span-9">
+            <div className="flex items-center justify-between text-xs font-semibold text-[var(--text-muted)] mb-4">
+              <span>{filtered.length} productos disponibles</span>
+              <span>{category === 'Todos' ? 'Mostrando todo el catálogo' : category}</span>
+            </div>
+
+            {filtered.length > 0 ? (
+              <div className="product-grid">
+                {filtered.map((p) => (
+                  <ProductCard key={p.id} product={p} />
+                ))}
+              </div>
+            ) : (
+              <div className="p-12 text-center rounded-2xl bg-white border border-[var(--border-line)]">
+                <span className="font-heading text-xl font-bold text-[var(--text-main)] block mb-2">
+                  No se encontraron productos
+                </span>
+                <p className="text-xs text-[var(--text-muted)] mb-4">
+                  Probá ajustando la búsqueda o seleccioná otra categoría.
+                </p>
+                <button
+                  type="button"
+                  className="button button-secondary text-xs h-9"
+                  onClick={() => {
+                    setQuery('');
+                    setCategory('Todos');
+                  }}
+                >
+                  Ver todo el catálogo
+                </button>
+              </div>
+            )}
+          </section>
+        </div>
+      </div>
+    </main>
+  );
+}

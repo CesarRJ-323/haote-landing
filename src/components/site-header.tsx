@@ -1,13 +1,264 @@
 'use client';
+
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { businessFacts } from '../data/business-facts';
 
-export function SiteHeader(){
-  const [open,setOpen]=useState(false);
-  const [cartOpen,setCartOpen]=useState(false);
-  const [quantity,setQuantity]=useState(1);
-  const unitPrice=6500;
-  useEffect(()=>{const add=()=>{setQuantity(value=>value+1);const button=document.querySelector<HTMLElement>('.cart-button');button?.animate([{transform:'scale(1)',boxShadow:'0 0 0 0 #ef745f00'},{transform:'scale(1.12)',boxShadow:'0 0 0 8px #ef745f33'},{transform:'scale(1)',boxShadow:'0 0 0 0 #ef745f00'}],{duration:520,easing:'cubic-bezier(.23,1,.32,1)'});};window.addEventListener('haote:add-to-cart',add);return()=>window.removeEventListener('haote:add-to-cart',add)},[]);
-  const closeMenu=()=>setOpen(false);
-  return <><header className="site-header"><div className="page-shell header-inner"><Link href="/" className="brand" aria-label="Haote Importadora, inicio"><span className="brand-mark">H</span><span className="brand-word"><strong>HAOTE</strong><small>IMPORTADORA</small></span></Link><nav id="main-navigation" className={open?'nav open':'nav'} aria-label="Navegación principal"><Link href="/" onClick={closeMenu}>Inicio</Link><Link href="/catalogo" onClick={closeMenu}>Catálogo</Link><a href="#contacto" onClick={closeMenu}>Contacto</a></nav><div className="header-actions"><Link className="header-link" href="/catalogo">Ver catálogo <span>↗</span></Link><button className="cart-button" aria-expanded={cartOpen} aria-controls="cart-panel" onClick={()=>setCartOpen(true)}>Carrito <b>{quantity}</b></button><button className="menu-button" onClick={()=>setOpen(!open)} aria-expanded={open} aria-controls="main-navigation" aria-label={open?'Cerrar menú':'Abrir menú'}>{open?'×':'☰'}</button></div></div></header>{cartOpen&&<><button className="cart-backdrop" aria-label="Cerrar carrito" onClick={()=>setCartOpen(false)}></button><aside id="cart-panel" className="cart-panel" aria-label="Carrito beta"><button className="cart-close" onClick={()=>setCartOpen(false)} aria-label="Cerrar carrito">×</button><div className="eyebrow">Carrito beta</div><h2 className="display">Tu pedido.</h2><p className="cart-note">Esta es una vista previa del carrito para la demo. Los precios son estimativos.</p><div className="cart-item"><div><strong>Pedido mayorista</strong><span>Productos seleccionados</span></div><div className="quantity"><button aria-label="Disminuir cantidad" onClick={()=>setQuantity(Math.max(1,quantity-1))}>−</button><b aria-live="polite">{quantity}</b><button aria-label="Aumentar cantidad" onClick={()=>setQuantity(quantity+1)}>+</button></div></div><div className="calculator"><div><span>Precio estimado por unidad</span><strong>{'$'}{(unitPrice*quantity).toLocaleString('es-AR')}</strong></div></div><Link href="/catalogo" className="button button-primary buy-button" onClick={()=>setCartOpen(false)}>Comprar ahora ↗</Link><p className="cart-footnote">El total final se confirma por WhatsApp según stock y pack.</p></aside></>}<style jsx>{`.site-header{position:sticky;top:0;z-index:20;background:#f7f4eed9;backdrop-filter:blur(14px);border-bottom:1px solid #ded8ce}.header-inner{height:78px;display:flex;align-items:center;justify-content:space-between;gap:24px}.brand{display:flex;align-items:center;gap:10px}.brand-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--coral);color:#fff;font-family:Fredoka;font-size:22px}.brand-word strong{display:block;font-family:Fredoka;font-size:18px;line-height:.9;letter-spacing:.03em}.brand-word small{display:block;font-size:9px;letter-spacing:.18em;color:var(--muted)}.nav{display:flex;gap:28px;font-weight:700;font-size:14px}.nav a{color:#536074}.nav a:hover{color:var(--ink)}.header-actions{display:flex;align-items:center;gap:14px}.header-link{font-weight:700;font-size:14px}.header-link span{color:var(--coral)}.cart-button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:9px 13px;font-weight:700;cursor:pointer}.cart-button b{display:inline-grid;place-items:center;min-width:20px;height:20px;margin-left:4px;border-radius:50%;background:var(--coral);color:#fff;font-size:11px}.menu-button{display:none;border:0;background:transparent;font-size:24px}.cart-backdrop{position:fixed;inset:0;z-index:40;background:#15243b44;border:0}.cart-panel{position:fixed;z-index:41;right:0;top:0;bottom:0;width:min(420px,92vw);background:var(--surface);padding:92px 30px 30px;box-shadow:-20px 0 50px #15243b22}.cart-close{position:absolute;top:22px;right:24px;border:0;background:transparent;font-size:30px;cursor:pointer}.cart-panel h2{font-size:54px;line-height:.9;margin:14px 0}.cart-note,.cart-footnote{color:var(--muted);line-height:1.5;font-size:13px}.cart-item{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0;margin:28px 0}.cart-item strong,.cart-item span{display:block}.cart-item span{font-size:13px;color:var(--muted);margin-top:5px}.quantity{display:flex;align-items:center;gap:10px}.quantity button{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:transparent;cursor:pointer}.calculator{background:#f0ece4;border-radius:16px;padding:18px;margin-bottom:18px}.calculator div{display:flex;justify-content:space-between;gap:15px;padding:8px 0;color:var(--muted)}.calculator strong{color:var(--ink)}.buy-button{width:100%;justify-content:center}.cart-footnote{text-align:center}@media(max-width:700px){.header-inner{height:68px}.menu-button{display:block}.nav{display:none;position:absolute;left:18px;right:18px;top:76px;padding:18px;background:var(--surface);border:1px solid var(--line);border-radius:18px;flex-direction:column;gap:16px;box-shadow:0 18px 30px #15243b18}.nav.open{display:flex}.header-link{display:none}.cart-button{padding:8px 10px;font-size:12px}}`}</style></>
+export function SiteHeader() {
+  const [open, setOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      setIsScrolled(scrollY > 40);
+
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        setScrollProgress(Math.min(1, Math.max(0, scrollY / totalHeight)));
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleAdd = () => {
+      setQuantity((v) => v + 1);
+    };
+    window.addEventListener('haote:add-to-cart', handleAdd);
+    return () => window.removeEventListener('haote:add-to-cart', handleAdd);
+  }, []);
+
+  // Cerrar menú con ESC
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setOpen(false);
+        setCartOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  const closeMenu = () => setOpen(false);
+
+  return (
+    <>
+      <header
+        className={`site-header sticky top-0 z-40 transition-all duration-200 ${
+          isScrolled ? 'is-scrolled h-[58px]' : 'h-[72px]'
+        }`}
+      >
+        <div className="page-shell h-full flex items-center justify-between gap-4">
+          {/* Logotipo */}
+          <Link
+            href="/"
+            className="flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-coral-action)] rounded-lg p-1"
+            aria-label="Haote Importadora, inicio"
+          >
+            <span className="w-8 h-8 rounded-full bg-[var(--accent-coral-action)] text-white font-heading font-bold text-lg flex items-center justify-center shadow-sm">
+              H
+            </span>
+            <span className="flex flex-col leading-none">
+              <strong className="font-heading text-base font-bold text-[var(--text-main)] tracking-wide">
+                HAOTE
+              </strong>
+              <small className="text-[9px] font-bold text-[var(--text-muted)] tracking-widest uppercase">
+                IMPORTADORA
+              </small>
+            </span>
+          </Link>
+
+          {/* Navegación Escritorio */}
+          <nav
+            id="main-navigation"
+            className="hidden md:flex items-center gap-8 text-[15px] font-bold text-[var(--text-muted)]"
+            aria-label="Navegación principal"
+          >
+            <Link href="/" className="hover:text-[var(--text-main)] transition-colors">
+              Inicio
+            </Link>
+            <Link href="/catalogo" className="hover:text-[var(--text-main)] transition-colors">
+              Catálogo
+            </Link>
+            <a href="#garantias" className="hover:text-[var(--text-main)] transition-colors">
+              Garantías
+            </a>
+            <a href="#contacto" className="hover:text-[var(--text-main)] transition-colors">
+              Contacto
+            </a>
+          </nav>
+
+          {/* Acciones */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Botón Carrito Compacto */}
+            <button
+              type="button"
+              className="relative w-11 h-11 flex items-center justify-center rounded-full border border-[var(--border-line)] bg-white text-[var(--text-main)] hover:bg-[var(--bg-subtle)] transition-colors active:scale-95 shadow-sm"
+              aria-expanded={cartOpen}
+              aria-controls="cart-panel"
+              aria-label={`Ver carrito, ${quantity} productos`}
+              onClick={() => setCartOpen(true)}
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                />
+              </svg>
+              {quantity > 0 && (
+                <span className="absolute -top-1 -right-1 w-[18px] h-[18px] rounded-full bg-[var(--accent-coral-action)] text-white text-[10px] font-bold flex items-center justify-center shadow-sm">
+                  {quantity}
+                </span>
+              )}
+            </button>
+
+            {/* Hamburguesa Móvil Accesible (48x48px) */}
+            <button
+              type="button"
+              className="md:hidden w-12 h-12 flex items-center justify-center rounded-lg text-[var(--text-main)] hover:bg-[var(--bg-subtle)] transition-colors"
+              onClick={() => setOpen(!open)}
+              aria-expanded={open}
+              aria-controls="mobile-navigation"
+              aria-label={open ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'}
+            >
+              {open ? (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Barra de Progreso de Scroll Fina (2px) */}
+        <div
+          className="scroll-progress-bar w-full"
+          style={{ transform: `scaleX(${scrollProgress})` }}
+          aria-hidden="true"
+        />
+      </header>
+
+      {/* Menú Desplegable Móvil */}
+      {open && (
+        <div
+          id="mobile-navigation"
+          className="md:hidden fixed inset-x-0 top-[58px] z-30 bg-white/95 backdrop-blur-md border-b border-[var(--border-line)] p-6 shadow-xl"
+        >
+          <nav className="flex flex-col gap-4 text-base font-bold text-[var(--text-main)]">
+            <Link
+              href="/catalogo"
+              onClick={closeMenu}
+              className="flex items-center justify-between p-3 rounded-xl bg-[var(--bg-subtle)] text-[var(--accent-coral-action)] font-heading text-lg"
+            >
+              <span>Ver Catálogo Completo</span>
+              <span>→</span>
+            </Link>
+            <Link href="/" onClick={closeMenu} className="p-2 hover:text-[var(--accent-coral-action)]">
+              Inicio
+            </Link>
+            <a href="#categorias" onClick={closeMenu} className="p-2 hover:text-[var(--accent-coral-action)]">
+              Categorías
+            </a>
+            <a href="#garantias" onClick={closeMenu} className="p-2 hover:text-[var(--accent-coral-action)]">
+              Garantías de Compra
+            </a>
+            <a href="#contacto" onClick={closeMenu} className="p-2 hover:text-[var(--accent-coral-action)]">
+              Ubicación y Contacto
+            </a>
+            <div className="pt-2 border-t border-[var(--border-line)]">
+              <a
+                href={businessFacts.whatsappUrl.value}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="button button-whatsapp w-full h-12 flex items-center justify-center gap-2 rounded-full"
+              >
+                <span>Consultar por WhatsApp</span>
+              </a>
+            </div>
+          </nav>
+        </div>
+      )}
+
+      {/* Carrito Panel Lateral */}
+      {cartOpen && (
+        <>
+          <div
+            className="cart-backdrop"
+            onClick={() => setCartOpen(false)}
+            aria-hidden="true"
+          />
+          <aside
+            id="cart-panel"
+            className="cart-panel"
+            aria-label="Panel de pedido mayorista"
+          >
+            <div className="flex items-center justify-between pb-4 border-b border-[var(--border-line)]">
+              <span className="font-heading text-xl font-bold text-[var(--text-main)]">
+                Tu Pedido Mayorista
+              </span>
+              <button
+                type="button"
+                onClick={() => setCartOpen(false)}
+                className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[var(--bg-subtle)] text-[var(--text-main)]"
+                aria-label="Cerrar panel"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="py-6 flex-1 overflow-y-auto">
+              <div className="p-4 rounded-xl bg-[var(--bg-subtle)] mb-4">
+                <span className="text-xs font-bold text-[var(--accent-coral-text)] uppercase tracking-wider block mb-1">
+                  Packs seleccionados
+                </span>
+                <p className="text-sm text-[var(--text-main)] font-semibold">
+                  {quantity} {quantity === 1 ? 'pack agregado' : 'packs agregados'} para cotización
+                </p>
+              </div>
+              <p className="text-xs text-[var(--text-muted)] leading-relaxed">
+                Armá tu lista de packs y consultá disponibilidad de stock en tiempo real directamente por WhatsApp.
+              </p>
+            </div>
+
+            <div className="pt-4 border-t border-[var(--border-line)] flex flex-col gap-3">
+              <a
+                href={businessFacts.whatsappUrl.value}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="button button-primary w-full h-12"
+              >
+                Confirmar pedido por WhatsApp →
+              </a>
+              <button
+                type="button"
+                onClick={() => setCartOpen(false)}
+                className="button button-secondary w-full h-10 text-xs"
+              >
+                Seguir explorando catálogo
+              </button>
+            </div>
+          </aside>
+        </>
+      )}
+    </>
+  );
 }

@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none">
+  <defs>
+    <linearGradient id="bg-adviento" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF2F2"/>
+      <stop offset="100%" stop-color="#FEE2E2"/>
+    </linearGradient>
+    <filter id="shadow-adviento" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#991B1B" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <rect width="800" height="600" rx="32" fill="url(#bg-adviento)"/>
+  <circle cx="400" cy="300" r="220" fill="#FECACA" opacity="0.5"/>
+
+  <!-- Golden Stars & Snowflakes -->
+  <polygon points="180,140 185,155 200,158 188,168 192,182 180,174 168,182 172,168 160,158 175,155" fill="#F59E0B" opacity="0.6"/>
+  <polygon points="640,390 644,402 656,404 647,412 650,424 640,417 630,424 633,412 624,404 636,402" fill="#F59E0B" opacity="0.6"/>
+
+  <!-- Advent Calendar Box (Isometric style 24 Doors Book/Box) -->
+  <g transform="translate(210, 100)" filter="url(#shadow-adviento)">
+    <!-- Main Box Body -->
+    <rect x="0" y="0" width="380" height="400" rx="20" fill="#991B1B" stroke="#B91C1C" stroke-width="6"/>
+    
+    <!-- Gold Foil Ribbon / Frame -->
+    <rect x="15" y="15" width="350" height="370" rx="14" fill="#7F1D1D" stroke="#F59E0B" stroke-width="3"/>
+
+    <!-- Header Banner -->
+    <path d="M40 30 H 340 V 75 H 40 Z" fill="#1B1464"/>
+    <text x="190" y="58" font-family="'Fredoka', sans-serif" font-size="20" font-weight="700" fill="#FFD23F" text-anchor="middle">
+      CALENDARIO DE ADVIENTO
+    </text>
+    <text x="190" y="70" font-family="'Nunito', sans-serif" font-size="10" font-weight="800" fill="#FFFFFF" text-anchor="middle" letter-spacing="2">
+      24 DÍAS · 24 SORPRESAS COLECCIONABLES
+    </text>
+
+    <!-- Grid of 24 Little Perforated Gift Windows -->
+    <!-- Row 1 -->
+    <rect x="40" y="90" width="46" height="46" rx="8" fill="#F59E0B"/>
+    <text x="63" y="120" font-family="'Fredoka', sans-serif" font-size="18" font-weight="700" fill="#78350F" text-anchor="middle">1</text>
+    <rect x="96" y="90" width="46" height="46" rx="8" fill="#DC2626"/>
+    <text x="119" y="120" font-family="'Fredoka', sans-serif" font-size="18" font-weight="700" fill="#FFF" text-anchor="middle">2</text>
+    <rect x="152" y="90" width="46" height="46" rx="8" fill="#15803D"/>
+    <text x="175" y="120" font-family="'Fredoka', sans-serif" font-size="18" font-weight="700" fill="#FFF" text-anchor="middle">3</text>
+    <rect x="208" y="90" width="46" height="46" rx="8" fill="#DC2626"/>
+    <text x="231" y="120" font-family="'Fredoka', sans-serif" font-size="18" font-weight="700" fill="#FFF" text-anchor="middle">4</text>
+    <rect x="264" y="90" width="46" height="46" rx="8" fill="#F59E0B"/>
+    <text x="287" y="120" font-family="'Fredoka', sans-serif" font-size="18" font-weight="700" fill="#78350F" text-anchor="middle">5</text>
+    <rect x="320" y="90" width="46" height="46" rx="8" fill="#15803D"/>
+    <text x="343" y="120" font-family="'Fredoka', sans-serif" font-size="18" font-weight="700" fill="#FFF" text-anchor="middle">6</text>
+
+    <!-- Row 2 -->
+    <rect x="40" y="146" width="46" height="46" rx="8" fill="#DC2626"/>
+    <text x="63" y="176" font-family="'Fredoka', sans-serif" font-size="18" font-weight="700" fill="#FFF" text-anchor="middle">7</text>
+    <rect x="96" y="146" width="46" height="46" rx="8" fill="#15803D"/>
+    <text x="119" y="176" font-family="'Fredoka', sans-serif" font-size="18" font-weight="700" fill="#FFF" text-anchor="middle">8</text>
+    <!-- Opened door with peek surprise! -->
+    <rect x="152" y="146" width="46" height="46" rx="8" fill="#1B1464"/>
+    <polygon points="175,156 182,170 197,172 186,182 188,196 175,188 162,196 164,182 153,172 168,170" fill="#FFD23F"/>
+    <rect x="208" y="146" width="46" height="46" rx="8" fill="#15803D"/>
+    <text x="231" y="176" font-family="'Fredoka', sans-serif" font-size="18" font-weight="700" fill="#FFF" text-anchor="middle">10</text>
+    <rect x="264" y="146" width="46" height="46" rx="8" fill="#DC2626"/>
+    <text x="287" y="176" font-family="'Fredoka', sans-serif" font-size="18" font-weight="700" fill="#FFF" text-anchor="middle">11</text>
+    <rect x="320" y="146" width="46" height="46" rx="8" fill="#F59E0B"/>
+    <text x="343" y="176" font-family="'Fredoka', sans-serif" font-size="18" font-weight="700" fill="#78350F" text-anchor="middle">12</text>
+
+    <!-- Row 3 -->
+    <rect x="40" y="202" width="46" height="46" rx="8" fill="#15803D"/>
+    <text x="63" y="232" font-family="'Fredoka', sans-serif" font-size="18" font-weight="700" fill="#FFF" text-anchor="middle">13</text>
+    <rect x="96" y="202" width="46" height="46" rx="8" fill="#F59E0B"/>
+    <text x="119" y="232" font-family="'Fredoka', sans-serif" font-size="18" font-weight="700" fill="#78350F" text-anchor="middle">14</text>
+    <rect x="152" y="202" width="46" height="46" rx="8" fill="#DC2626"/>
+    <text x="175" y="232" font-family="'Fredoka', sans-serif" font-size="18" font-weight="700" fill="#FFF" text-anchor="middle">15</text>
+    <rect x="208" y="202" width="46" height="46" rx="8" fill="#F59E0B"/>
+    <text x="231" y="232" font-family="'Fredoka', sans-serif" font-size="18" font-weight="700" fill="#78350F" text-anchor="middle">16</text>
+    <rect x="264" y="202" width="46" height="46" rx="8" fill="#15803D"/>
+    <text x="287" y="232" font-family="'Fredoka', sans-serif" font-size="18" font-weight="700" fill="#FFF" text-anchor="middle">17</text>
+    <rect x="320" y="202" width="46" height="46" rx="8" fill="#DC2626"/>
+    <text x="343" y="232" font-family="'Fredoka', sans-serif" font-size="18" font-weight="700" fill="#FFF" text-anchor="middle">18</text>
+
+    <!-- Row 4 -->
+    <rect x="40" y="258" width="46" height="46" rx="8" fill="#DC2626"/>
+    <text x="63" y="288" font-family="'Fredoka', sans-serif" font-size="18" font-weight="700" fill="#FFF" text-anchor="middle">19</text>
+    <rect x="96" y="258" width="46" height="46" rx="8" fill="#15803D"/>
+    <text x="119" y="288" font-family="'Fredoka', sans-serif" font-size="18" font-weight="700" fill="#FFF" text-anchor="middle">20</text>
+    <rect x="152" y="258" width="46" height="46" rx="8" fill="#F59E0B"/>
+    <text x="175" y="288" font-family="'Fredoka', sans-serif" font-size="18" font-weight="700" fill="#78350F" text-anchor="middle">21</text>
+    <rect x="208" y="258" width="46" height="46" rx="8" fill="#DC2626"/>
+    <text x="231" y="288" font-family="'Fredoka', sans-serif" font-size="18" font-weight="700" fill="#FFF" text-anchor="middle">22</text>
+    <rect x="264" y="258" width="46" height="46" rx="8" fill="#15803D"/>
+    <text x="287" y="288" font-family="'Fredoka', sans-serif" font-size="18" font-weight="700" fill="#FFF" text-anchor="middle">23</text>
+    
+    <!-- Big 24 Grand Finale Window -->
+    <rect x="110" y="314" width="160" height="60" rx="12" fill="#F59E0B" stroke="#FFF" stroke-width="3"/>
+    <text x="190" y="352" font-family="'Fredoka', sans-serif" font-size="28" font-weight="700" fill="#78350F" text-anchor="middle">★ 24 NAVIDAD ★</text>
+  </g>
+
+  <!-- Badges -->
+  <g transform="translate(60, 60)">
+    <rect width="170" height="46" rx="23" fill="#1B1464"/>
+    <text x="85" y="29" font-family="'Nunito', sans-serif" font-size="18" font-weight="800" fill="#FFD23F" text-anchor="middle">
+      PACK X2 CAJAS
+    </text>
+  </g>
+
+  <g transform="translate(560, 60)">
+    <rect width="180" height="46" rx="23" fill="#3DDC97"/>
+    <text x="90" y="29" font-family="'Nunito', sans-serif" font-size="16" font-weight="900" fill="#1B1464" text-anchor="middle">
+      TEMPORADA TOP
+    </text>
+  </g>
+</svg>
+

@@ -1,3 +1,2 @@
-@keyframes haote-rise{from{opacity:0;transform:translateY(18px);filter:blur(3px)}to{opacity:1;transform:none;filter:none}}
-.reveal{opacity:1!important;transform:none!important;animation:haote-rise .8s cubic-bezier(.23,1,.32,1) both}
-@media(prefers-reduced-motion:reduce){.reveal{animation:none!important}}
+/* app/motion.css - Purga de animaciones destructivas */
+/* Las animaciones con propósito y fluidas se gestionan de forma controlada sin forzar !important */
