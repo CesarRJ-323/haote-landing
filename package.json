@@ -1,0 +1,28 @@
+{
+  "name": "haote-next-beta",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Landing page demo de alta conversión para Importadora Haote - Mayorista de juguetes de moda",
+  "scripts": {
+    "dev": "node node_modules/next/dist/bin/next dev",
+    "start": "node node_modules/next/dist/bin/next start",
+    "build": "node node_modules/next/dist/bin/next build",
+    "lint": "node node_modules/next/dist/bin/next lint"
+  },
+  "dependencies": {
+    "@fontsource/fredoka": "^5.1.1",
+    "@fontsource/nunito": "^5.1.1",
+    "framer-motion": "^14.14.0",
+    "gsap": "^3.12.7",
+    "lenis": "^1.1.20",
+    "next": "^15.1.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^3.4.17"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "typescript": "^5.9.3"
+  }
+}

@@ -1,0 +1,36 @@
+---
+import { getWhatsAppLink } from '../data/site.config';
+
+const whatsAppUrl = getWhatsAppLink('¡Hola! Estoy viendo la web de Importadora Haote y quiero consultar precios mayoristas.');
+---
+
+<aside class="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+  <!-- Cartel flotante de invitación con física de Emil Kowalski -->
+  <a
+    href={whatsAppUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="btn-tactile hidden sm:flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white text-brand-dark font-heading font-bold text-xs lg:text-sm shadow-md border border-stone-200 group"
+    aria-label="Pedir lista de precios mayoristas por WhatsApp"
+  >
+    <span class="w-2 h-2 rounded-full bg-teal-500 animate-pulse-subtle"></span>
+    <span>¡Pedí lista mayorista aquí!</span>
+  </a>
+
+  <!-- Botón Circular Flotante con pulso atenuado y estado :active -->
+  <a
+    href={whatsAppUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="btn-tactile relative w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-md active:scale-95 focus-visible:ring-4 focus-visible:ring-[#25D366]/40"
+    aria-label="Contactar por WhatsApp a Importadora Haote"
+  >
+    <!-- Anillo de pulso sutil -->
+    <span class="absolute inset-0 rounded-full bg-[#25D366] animate-pulse-subtle -z-10"></span>
+
+    <!-- Icono de WhatsApp oficial vectorizado -->
+    <svg class="w-8 h-8 fill-current shrink-0" viewBox="0 0 24 24">
+      <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.586 1.771.862 2.802.862l.006-.001c3.182 0 5.767-2.587 5.768-5.766.001-3.182-2.585-5.768-5.78-5.768zm3.364 8.169c-.14.394-.805.748-1.127.794-.322.046-.737.065-1.18-.08-.442-.144-1.014-.338-1.758-1.077-.927-.923-1.536-2.072-1.745-2.423-.209-.352-.022-.542.155-.717.158-.157.352-.404.528-.606.176-.202.234-.344.351-.572.117-.229.059-.429-.029-.606-.088-.176-.791-1.907-1.085-2.613-.286-.689-.577-.596-.791-.607-.205-.01-.44-.012-.674-.012-.235 0-.616.088-.939.44-.322.352-1.231 1.203-1.231 2.934 0 1.732 1.26 3.407 1.436 3.642.176.235 2.479 3.786 6.006 5.308.839.362 1.494.578 2.004.74.843.268 1.61.23 2.216.14.675-.101 2.08-.85 2.373-1.67.293-.82.293-1.523.205-1.67-.088-.147-.322-.235-.674-.411z"/>
+    </svg>
+  </a>
+</aside>

@@ -1,0 +1,83 @@
+---
+import { siteConfig } from '../data/site.config';
+
+const stepColors = [
+  { bg: 'bg-pastel-turquesa/25 border-teal-200 text-teal-800', numColor: 'text-teal-100', dot: 'bg-teal-500' },
+  { bg: 'bg-pastel-amarillo/40 border-amber-300 text-amber-800', numColor: 'text-amber-100', dot: 'bg-amber-500' },
+  { bg: 'bg-pastel-rosa/25 border-pink-200 text-pink-700', numColor: 'text-pink-100', dot: 'bg-pink-500' },
+];
+---
+
+<section id="como-comprar" class="py-20 lg:py-28 bg-white relative overflow-hidden border-b border-stone-200/80">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    
+    <!-- Encabezado de Sección -->
+    <div class="text-center max-w-3xl mx-auto mb-16" data-drop-single>
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pastel-turquesa/30 text-teal-900 border border-teal-200 text-xs sm:text-sm font-bold uppercase tracking-wider mb-4">
+        <span>Fácil, Rápido y Seguro</span>
+      </div>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-heading font-black text-brand-dark tracking-tight mb-4">
+        ¿Cómo comprar por mayor?
+      </h2>
+      <p class="text-base sm:text-lg text-brand-muted leading-relaxed">
+        Comprar en Once nunca fue tan simple. Sin registros complicados ni carritos lentos: te atendemos directo por WhatsApp.
+      </p>
+    </div>
+
+    <!-- Grilla de 3 Pasos que caen por scroll -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative" data-drop-group>
+      {siteConfig.howToBuySteps.map((stepItem, index) => {
+        const color = stepColors[index] || stepColors[0];
+        return (
+          <div
+            class="card-tactile relative bg-pastel-bg rounded-3xl p-8 shadow-soft-sm border border-stone-200 flex flex-col justify-between group hover:shadow-soft hover:bg-white transition-all"
+            data-drop
+          >
+            <!-- Número de paso gigante de fondo -->
+            <span class={`absolute top-4 right-6 font-heading font-black text-6xl ${color.numColor} select-none pointer-events-none group-hover:scale-105 transition-transform`}>
+              {stepItem.step}
+            </span>
+
+            <div>
+              <!-- Icono del Paso con Pastel suave -->
+              <div class={`w-14 h-14 rounded-2xl ${color.bg} border flex items-center justify-center mb-6 group-hover:scale-105 transition-transform`}>
+                {stepItem.icon === 'catalog' && (
+                  <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                  </svg>
+                )}
+                {stepItem.icon === 'whatsapp' && (
+                  <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
+                )}
+                {stepItem.icon === 'truck' && (
+                  <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
+                  </svg>
+                )}
+              </div>
+
+              <!-- Título del Paso -->
+              <h3 class="text-2xl font-heading font-black text-brand-dark mb-3">
+                {stepItem.title}
+              </h3>
+
+              <!-- Descripción -->
+              <p class="text-sm sm:text-base text-brand-muted leading-relaxed">
+                {stepItem.description}
+              </p>
+            </div>
+
+            <!-- Micro footer informativo -->
+            <div class="mt-6 pt-4 border-t border-stone-200/80 flex items-center gap-2 text-xs font-bold text-stone-600">
+              <span class={`w-2.5 h-2.5 rounded-full ${color.dot}`}></span>
+              <span>Paso {stepItem.step} verificado</span>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+
+  </div>
+</section>

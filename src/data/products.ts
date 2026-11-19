@@ -1,0 +1,138 @@
+export interface Product {
+  id: string;
+  name: string;
+  cleanName: string;
+  pack: string;
+  price: number;
+  formattedPrice: string;
+  unitPrice: string;
+  category: string;
+  badge?: string;
+  badgeColor?: 'turquesa' | 'rosa' | 'amarillo' | 'violeta';
+  image: string;
+  originalUrl: string;
+  whatsappMessage: string;
+}
+
+export const products: Product[] = [
+  {
+    id: 'lego-spiderman-x8',
+    name: 'LEGO Spiderman Colección',
+    cleanName: 'LEGO Spiderman Surtido',
+    pack: 'Pack x8 unidades',
+    price: 21500,
+    formattedPrice: '$21.500',
+    unitPrice: '$2.687 / u.',
+    category: 'Lego y Bloques',
+    badge: 'Más Vendido',
+    badgeColor: 'amarillo',
+    image: '/images/products/lego-spiderman-x8.svg',
+    originalUrl: 'https://importadorahaote.com/product-category/personajes/',
+    whatsappMessage: '¡Hola! Quiero consultar stock y disponibilidad de LEGO Spiderman Pack x8 ($21.500).',
+  },
+  {
+    id: 'lego-stitch-x4',
+    name: 'LEGO Stitch Edición Especial',
+    cleanName: 'LEGO Stitch Variantes',
+    pack: 'Pack x4 unidades',
+    price: 25000,
+    formattedPrice: '$25.000',
+    unitPrice: '$6.250 / u.',
+    category: 'Lego y Bloques',
+    badge: 'Viral en TikTok',
+    badgeColor: 'rosa',
+    image: '/images/products/lego-stitch-x4.svg',
+    originalUrl: 'https://importadorahaote.com/product-category/personajes/',
+    whatsappMessage: '¡Hola! Quiero hacer un pedido mayorista de LEGO Stitch Pack x4 ($25.000).',
+  },
+  {
+    id: 'lego-pokemon-x8',
+    name: 'LEGO Pokémon Entrenadores',
+    cleanName: 'LEGO Pokémon Surtido',
+    pack: 'Pack x8 unidades',
+    price: 21500,
+    formattedPrice: '$21.500',
+    unitPrice: '$2.687 / u.',
+    category: 'Lego y Bloques',
+    badge: 'Clásico Siempre',
+    badgeColor: 'turquesa',
+    image: '/images/products/lego-pokemon-x8.svg',
+    originalUrl: 'https://importadorahaote.com/product-category/personajes/',
+    whatsappMessage: '¡Hola! Me interesa comprar el Pack x8 de LEGO Pokémon ($21.500).',
+  },
+  {
+    id: 'lego-plantas-zombies-x4',
+    name: 'LEGO Plantas vs Zombies Batalla',
+    cleanName: 'LEGO Plantas vs Zombies',
+    pack: 'Pack x4 unidades',
+    price: 23000,
+    formattedPrice: '$23.000',
+    unitPrice: '$5.750 / u.',
+    category: 'Lego y Bloques',
+    badge: 'Alta Rotación',
+    badgeColor: 'violeta',
+    image: '/images/products/lego-plantas-zombies-x4.svg',
+    originalUrl: 'https://importadorahaote.com/product-category/personajes/',
+    whatsappMessage: '¡Hola! Quisiera encargar LEGO Plantas vs Zombies Pack x4 ($23.000).',
+  },
+  {
+    id: 'pop-stitch',
+    name: 'POP Stitch Coleccionable en Caja',
+    cleanName: 'POP Stitch Figura Coleccionable',
+    pack: 'Unidad mayorista (Display x6)',
+    price: 6500,
+    formattedPrice: '$6.500',
+    unitPrice: '$6.500 / u.',
+    category: 'Personajes y Pop',
+    badge: 'Ideal Kioscos',
+    badgeColor: 'rosa',
+    image: '/images/products/pop-stitch.svg',
+    originalUrl: 'https://importadorahaote.com/product-category/pop-surtido/',
+    whatsappMessage: '¡Hola! Consulto por POP Stitch en caja individual ($6.500 c/u mayorista).',
+  },
+  {
+    id: 'peluche-spiderman',
+    name: 'Peluche Spiderman Soft 35cm',
+    cleanName: 'Peluche Spiderman Premium',
+    pack: 'Pack x4 unidades',
+    price: 26000,
+    formattedPrice: '$26.000',
+    unitPrice: '$6.500 / u.',
+    category: 'Peluches',
+    badge: 'Regalería',
+    badgeColor: 'amarillo',
+    image: '/images/products/peluche-spiderman.svg',
+    originalUrl: 'https://importadorahaote.com/product-category/peluche/',
+    whatsappMessage: '¡Hola! Me interesa el pack de Peluches Spiderman 35cm ($26.000 x4).',
+  },
+  {
+    id: 'mochila-agua-verano',
+    name: 'Pistola de Agua Tipo Mochila',
+    cleanName: 'Mochila Pistola de Agua Verano',
+    pack: 'Pack x4 unidades surtidas',
+    price: 24000,
+    formattedPrice: '$24.000',
+    unitPrice: '$6.000 / u.',
+    category: 'Verano',
+    badge: 'Temporada Verano',
+    badgeColor: 'turquesa',
+    image: '/images/products/mochila-agua-verano.svg',
+    originalUrl: 'https://importadorahaote.com/product-category/verano/',
+    whatsappMessage: '¡Hola! Quiero cotizar la Pistola de Agua con Mochila Pack x4 ($24.000).',
+  },
+  {
+    id: 'calendario-adviento',
+    name: 'Calendario de Adviento Sorpresas',
+    cleanName: 'Calendario de Adviento 24 Días',
+    pack: 'Pack x2 unidades',
+    price: 28000,
+    formattedPrice: '$28.000',
+    unitPrice: '$14.000 / u.',
+    category: 'Temporada / Fiestas',
+    badge: 'Alto Margen',
+    badgeColor: 'violeta',
+    image: '/images/products/calendario-adviento.svg',
+    originalUrl: 'https://importadorahaote.com/product-category/calendario-de-adviento/',
+    whatsappMessage: '¡Hola! Consulto por stock disponible de Calendarios de Adviento Pack x2 ($28.000).',
+  },
+];

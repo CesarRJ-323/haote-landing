@@ -1,0 +1,253 @@
+---
+import { siteConfig } from '../data/site.config';
+
+const { location } = siteConfig;
+---
+
+<section id="ubicacion" class="py-20 lg:py-24 bg-white relative border-b border-stone-200/80">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+      
+      <!-- Columna Izquierda: Información de la Ubicación Demo y Logística -->
+      <div class="lg:col-span-6" data-drop-single>
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pastel-turquesa/30 text-teal-900 border border-teal-200 text-xs font-bold uppercase tracking-wider mb-4">
+          <span>Ubicación Comercial (Demo Once)</span>
+        </div>
+        
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-heading font-black text-brand-dark tracking-tight mb-4">
+          Retirá en el local o despachamos a tu expreso
+        </h2>
+
+        <p class="text-base sm:text-lg text-brand-muted leading-relaxed mb-6">
+          Ubicación estratégica en la zona mayorista de Once. Podés retirar tu bulto en el acto o coordinar el despacho inmediato al expreso de tu confianza.
+        </p>
+
+        <!-- Bloques de datos clave con diseño táctil -->
+        <div class="space-y-3.5 mb-8">
+          <!-- Dirección Falsa de Prueba solicitada (Pastel Turquesa) -->
+          <div class="card-tactile flex items-start gap-4 p-4 rounded-2xl bg-pastel-bg border border-stone-200 shadow-soft-sm">
+            <div class="w-11 h-11 rounded-xl bg-pastel-turquesa/30 text-teal-800 flex items-center justify-center shrink-0 border border-teal-200">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h4 class="font-heading font-bold text-base sm:text-lg text-brand-dark">{location.address}</h4>
+                <span class="text-[10px] font-bold uppercase bg-pastel-amarillo text-brand-dark px-2 py-0.5 rounded border border-amber-300">Mock Demo</span>
+              </div>
+              <p class="text-xs sm:text-sm text-brand-muted">{location.neighborhood}, {location.city}</p>
+            </div>
+          </div>
+
+          <!-- Horarios (Pastel Amarillo) -->
+          <div class="card-tactile flex items-start gap-4 p-4 rounded-2xl bg-pastel-bg border border-stone-200 shadow-soft-sm">
+            <div class="w-11 h-11 rounded-xl bg-pastel-amarillo/40 text-amber-800 flex items-center justify-center shrink-0 border border-amber-300">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div>
+              <h4 class="font-heading font-bold text-base sm:text-lg text-brand-dark">Horario Mayorista</h4>
+              <p class="text-xs sm:text-sm text-brand-muted">{location.schedule}</p>
+            </div>
+          </div>
+
+          <!-- Logística y Despacho (Pastel Rosa) -->
+          <div class="card-tactile flex items-start gap-4 p-4 rounded-2xl bg-pastel-bg border border-stone-200 shadow-soft-sm">
+            <div class="w-11 h-11 rounded-xl bg-pastel-rosa/30 text-pink-700 flex items-center justify-center shrink-0 border border-pink-200">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+              </svg>
+            </div>
+            <div>
+              <h4 class="font-heading font-bold text-base sm:text-lg text-brand-dark">Despacho al Interior</h4>
+              <p class="text-xs sm:text-sm text-brand-muted">Entregamos en expresos de Villa Soldati, Pompeya y Parque Patricios en menos de 24 hs.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botón Abrir Google Maps con dirección falsa de prueba -->
+        <a
+          href={location.mapsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-tactile inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-pastel-turquesa text-brand-dark font-heading font-bold text-base border border-teal-300 hover:bg-[#38C6D8] shadow-soft-sm group"
+        >
+          <span>Abrir Dirección Falsa en Google Maps</span>
+          <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+      </div>
+
+      <!-- Columna Derecha: Tarjeta Ilustrada estilo Google Maps UI Interactivo -->
+      <div class="lg:col-span-6" data-drop-single>
+        <div class="relative rounded-3xl bg-white p-4 sm:p-6 shadow-soft-md border border-stone-200 overflow-hidden">
+          
+          <!-- Barra superior simulada de Google Maps -->
+          <div class="flex items-center justify-between pb-3 mb-3 border-b border-stone-200">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-red-500"></span>
+              <span class="font-heading font-bold text-xs text-brand-dark">Google Maps Demo</span>
+            </div>
+            <div class="flex items-center gap-1.5 text-xs text-brand-muted">
+              <span class="bg-stone-100 px-2 py-0.5 rounded text-[11px] font-bold">Zoom interactivo</span>
+            </div>
+          </div>
+
+          <!-- Mapa Vectorial con controles de Zoom interactivo -->
+          <div class="relative w-full aspect-[4/3] rounded-2xl bg-[#E8ECEF] border border-stone-300 overflow-hidden flex items-center justify-center p-2">
+            
+            <!-- Red de calles vectorizada con ID para zoom -->
+            <svg
+              id="vector-map-svg"
+              class="absolute inset-0 w-full h-full transition-transform duration-300 ease-out"
+              viewBox="0 0 500 350"
+              fill="none"
+            >
+              <!-- Fondo de manzanas de la ciudad -->
+              <rect x="20" y="20" width="130" height="90" rx="8" fill="#DCE1E6" />
+              <rect x="175" y="20" width="140" height="90" rx="8" fill="#DCE1E6" />
+              <rect x="340" y="20" width="140" height="90" rx="8" fill="#DCE1E6" />
+
+              <rect x="20" y="140" width="130" height="90" rx="8" fill="#DCE1E6" />
+              <!-- Manzana destacada donde está la dirección demo en pastel amarillo -->
+              <rect x="175" y="140" width="140" height="90" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2" />
+              <rect x="340" y="140" width="140" height="90" rx="8" fill="#DCE1E6" />
+
+              <rect x="20" y="260" width="130" height="70" rx="8" fill="#DCE1E6" />
+              <rect x="175" y="260" width="140" height="70" rx="8" fill="#DCE1E6" />
+              <rect x="340" y="260" width="140" height="70" rx="8" fill="#DCE1E6" />
+
+              <!-- Avenidas y Calles -->
+              <rect x="150" y="0" width="24" height="350" fill="#CBD5E1" />
+              <text x="162" y="320" font-family="'Nunito', sans-serif" font-size="9" font-weight="800" fill="#475569" transform="rotate(-90 162 320)">
+                AV. CORRIENTES 2480 (DEMO)
+              </text>
+
+              <rect x="315" y="0" width="24" height="350" fill="#CBD5E1" />
+              <text x="327" y="320" font-family="'Nunito', sans-serif" font-size="9" font-weight="800" fill="#64748B" transform="rotate(-90 327 320)">
+                SARMIENTO
+              </text>
+
+              <rect x="0" y="110" width="500" height="30" fill="#CBD5E1" />
+              <text x="40" y="128" font-family="'Nunito', sans-serif" font-size="10" font-weight="800" fill="#475569">
+                PASTEUR (Zona Mayorista)
+              </text>
+
+              <rect x="0" y="230" width="500" height="30" fill="#CBD5E1" />
+              <text x="40" y="248" font-family="'Nunito', sans-serif" font-size="10" font-weight="800" fill="#64748B">
+                LARREA
+              </text>
+
+              <!-- Pin Falso Interactivo estilo Google Maps -->
+              <g transform="translate(230, 160)">
+                <!-- Onda de radar animada -->
+                <circle cx="15" cy="15" r="14" fill="#EF4444" opacity="0.25" class="animate-ping" />
+                
+                <!-- Cuerpo del Pin -->
+                <path
+                  d="M15 0C6.716 0 0 6.716 0 15c0 10.5 15 25 15 25s15-14.5 15-25C30 6.716 23.284 0 15 0z"
+                  fill="#EF4444"
+                />
+                <circle cx="15" cy="14" r="6" fill="#FFFFFF" />
+              </g>
+
+              <!-- Cartel informativo sobre el pin -->
+              <g transform="translate(200, 145)">
+                <rect x="0" y="0" width="90" height="22" rx="6" fill="#1E293B" />
+                <text x="45" y="15" font-family="'Fredoka', sans-serif" font-size="9" font-weight="700" fill="#FFFFFF" text-anchor="middle">
+                  HAOTE DEMO · Once
+                </text>
+              </g>
+            </svg>
+
+            <!-- Controles flotantes de Zoom in / Zoom out interactivos -->
+            <div class="absolute right-4 bottom-4 flex flex-col bg-white rounded-lg shadow-md border border-stone-200 overflow-hidden z-20">
+              <button
+                type="button"
+                id="btn-zoom-in"
+                class="p-2 hover:bg-stone-100 text-stone-700 border-b border-stone-200 transition-colors"
+                aria-label="Acercar mapa"
+                title="Acercar mapa"
+              >
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m6-6H6" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                id="btn-zoom-out"
+                class="p-2 hover:bg-stone-100 text-stone-700 transition-colors"
+                aria-label="Alejar mapa"
+                title="Alejar mapa"
+              >
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M18 12H6" />
+                </svg>
+              </button>
+            </div>
+
+            <!-- Mini badge de referencia dentro del mapa -->
+            <div class="absolute left-3 bottom-3 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-md text-[10px] font-bold text-stone-700 border border-stone-200 pointer-events-none z-20 flex items-center gap-1.5 shadow-sm">
+              <span class="w-2 h-2 rounded-full bg-red-500"></span>
+              <span>Subte B Pasteur (2 cuadras)</span>
+            </div>
+          </div>
+
+          <!-- Pie del cuadro de mapa -->
+          <div class="mt-3 flex items-center justify-between text-xs text-brand-muted">
+            <span>Zona Comercial Balvanera / Once</span>
+            <a
+              href={location.mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-teal-700 font-bold hover:underline"
+            >
+              Ir directo con un clic a Google Maps →
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- Script para controles interactivos de Zoom del mapa -->
+<script>
+  function setupMapZoom() {
+    const mapSvg = document.getElementById('vector-map-svg');
+    const btnZoomIn = document.getElementById('btn-zoom-in');
+    const btnZoomOut = document.getElementById('btn-zoom-out');
+
+    if (!mapSvg || !btnZoomIn || !btnZoomOut) return;
+
+    let zoomLevel = 1;
+
+    btnZoomIn.addEventListener('click', () => {
+      if (zoomLevel < 1.6) {
+        zoomLevel += 0.2;
+        mapSvg.style.transform = `scale(${zoomLevel})`;
+      }
+    });
+
+    btnZoomOut.addEventListener('click', () => {
+      if (zoomLevel > 0.8) {
+        zoomLevel -= 0.2;
+        mapSvg.style.transform = `scale(${zoomLevel})`;
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupMapZoom);
+  } else {
+    setupMapZoom();
+  }
+</script>

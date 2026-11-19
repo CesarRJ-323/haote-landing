@@ -1,0 +1,183 @@
+@import '@fontsource/fredoka/400.css';
+@import '@fontsource/fredoka/500.css';
+@import '@fontsource/fredoka/600.css';
+@import '@fontsource/fredoka/700.css';
+@import '@fontsource/nunito/400.css';
+@import '@fontsource/nunito/600.css';
+@import '@fontsource/nunito/700.css';
+@import '@fontsource/nunito/800.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Paleta Pastel Suave (Opción 2 + Roma Store) */
+  --color-turquesa: #4DD0E1;
+  --color-rosa: #F48FB1;
+  --color-amarillo: #FFE082;
+  --color-violeta: #B39DDB;
+  --color-bg: #F8F9FA;
+  --color-surface: #FFFFFF;
+  --color-dark: #1E293B;
+  --color-text: #1E293B;
+  --color-muted: #64748B;
+  --color-border: #E2E8F0;
+
+  /* Emil Kowalski custom curves (STANDARDS.md) */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  font-family: 'Nunito', sans-serif;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  scroll-behavior: auto;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: 'Fredoka', cursive, sans-serif;
+}
+
+/* Cifras tabulares para alineación perfecta de precios */
+.tabular-nums, .price-value {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Lenis Smooth Scroll */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Fondo limpio sutil estilo tienda boutique (Roma Store) */
+.store-pattern-soft {
+  background-image: radial-gradient(rgba(100, 116, 139, 0.06) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+}
+
+/* Micro-interacciones táctiles con física de Emil Kowalski */
+.btn-tactile {
+  transition: transform 140ms var(--ease-out), box-shadow 140ms var(--ease-out), background-color 140ms ease;
+  will-change: transform;
+}
+
+.btn-tactile:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.card-tactile {
+  transition: transform 160ms var(--ease-out), box-shadow 160ms var(--ease-out), border-color 160ms ease;
+  will-change: transform;
+}
+
+.card-tactile:active {
+  transform: translateY(-1px) scale(0.99);
+}
+
+/* Hover gating estricto (STANDARDS.md regla #8) para evitar sticky hover en celulares */
+@media (hover: hover) and (pointer: fine) {
+  .btn-tactile:hover {
+    transform: translateY(-2px);
+  }
+
+  .card-tactile:hover {
+    transform: translateY(-3px);
+  }
+}
+
+/* Animaciones sutiles continuas */
+@keyframes float-gentle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float-gentle {
+  animation: float-gentle 4s var(--ease-in-out) infinite;
+}
+
+/* Marquee Infinito */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .animate-marquee:hover {
+    animation-play-state: paused;
+  }
+}
+
+/* Anillo de pulso controlado para botón WhatsApp */
+@keyframes pulse-ring-subtle {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-ring-subtle 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Accesibilidad estricta: prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-float-gentle,
+  .animate-marquee,
+  .animate-pulse-subtle,
+  .btn-tactile,
+  .card-tactile {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+::selection {
+  background-color: var(--color-turquesa);
+  color: var(--color-dark);
+}

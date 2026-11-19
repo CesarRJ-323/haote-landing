@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 90" fill="none">
+  <!-- Toy Brick Icon -->
+  <g transform="translate(10, 12)">
+    <!-- Base block with shadow -->
+    <rect x="0" y="16" width="60" height="48" rx="10" fill="#FFD23F"/>
+    <path d="M0 54C0 59.5 4.5 64 10 64H50C55.5 64 60 59.5 60 54V60C60 65.5 55.5 70 50 70H10C4.5 70 0 65.5 0 60V54Z" fill="#E5B81A" opacity="0.4"/>
+    <!-- Studs -->
+    <rect x="10" y="8" width="16" height="12" rx="4" fill="#FFE27A"/>
+    <rect x="34" y="8" width="16" height="12" rx="4" fill="#FFE27A"/>
+    <!-- Playful letter H -->
+    <path d="M18 30V50M42 30V50M18 40H42" stroke="#1B1464" stroke-width="6" stroke-linecap="round"/>
+    <!-- Star accent -->
+    <path d="M54 10L56 16L62 17L57.5 21L59 27L54 23.5L49 27L50.5 21L46 17L52 16L54 10Z" fill="#FF4D8D"/>
+  </g>
+
+  <!-- Typography -->
+  <g transform="translate(85, 20)">
+    <!-- Main Brand Name -->
+    <text x="0" y="32" font-family="'Fredoka', 'Baloo 2', sans-serif" font-size="28" font-weight="700" fill="#FFFFFF" letter-spacing="0.5">
+      IMPORTADORA <tspan fill="#FFD23F">HAOTE</tspan>
+    </text>
+    <!-- Tagline Badge -->
+    <g transform="translate(0, 40)">
+      <rect x="0" y="0" width="164" height="20" rx="10" fill="#FF4D8D"/>
+      <text x="82" y="14" font-family="'Nunito', sans-serif" font-size="11" font-weight="800" fill="#FFFFFF" text-anchor="middle" letter-spacing="1">
+        JUGUETES DE MODA
+      </text>
+    </g>
+    <!-- Wholesale Badge -->
+    <g transform="translate(172, 40)">
+      <rect x="0" y="0" width="100" height="20" rx="10" fill="#3DDC97" fill-opacity="0.2" stroke="#3DDC97" stroke-width="1.5"/>
+      <text x="50" y="14" font-family="'Nunito', sans-serif" font-size="10.5" font-weight="800" fill="#3DDC97" text-anchor="middle" letter-spacing="0.8">
+        MAYORISTA ONCE
+      </text>
+    </g>
+  </g>
+</svg>
