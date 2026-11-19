@@ -3,10 +3,18 @@ export default {
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './src/**/*.{js,ts,jsx,tsx,mdx,astro}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
       colors: {
+        background: 'var(--bg-canvas)',
+        foreground: 'var(--text-main)',
+        primary: {
+          DEFAULT: 'var(--accent-coral-action)',
+          foreground: '#FFFFFF',
+        },
+        'muted-foreground': 'var(--text-muted)',
         canvas: 'var(--bg-canvas)',
         surface: 'var(--bg-surface)',
         subtle: 'var(--bg-subtle)',
