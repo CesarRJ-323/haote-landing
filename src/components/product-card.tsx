@@ -4,7 +4,7 @@ import type { CatalogProduct } from '../data/catalog';
 
 export function ProductCard({ product }: { product: CatalogProduct }) {
   const addToCart = () => {
-    window.dispatchEvent(new CustomEvent('haote:add-to-cart'));
+    window.dispatchEvent(new CustomEvent('haote:add-to-cart', { detail: product }));
   };
 
   return (

@@ -59,6 +59,24 @@ button, input, select {
   text-wrap: balance;
 }
 
+.typewriter-caret {
+  display: inline-block;
+  width: 0.06em;
+  height: 0.9em;
+  margin-left: 0.12em;
+  vertical-align: -0.08em;
+  background: currentColor;
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .typewriter-caret {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+
+}
+
 p {
   text-wrap: pretty;
 }

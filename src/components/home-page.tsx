@@ -7,6 +7,8 @@ import { ProductCard } from './product-card';
 import { HeroSection } from './hero-section';
 import { businessFacts } from '../data/business-facts';
 import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button';
+import { TrustCarousel } from './TrustCarousel';
+import { BenefitsSection } from './BenefitsSection';
 
 export function HomePage() {
   const topProducts = catalogProducts.slice(0, 4);
@@ -18,31 +20,31 @@ export function HomePage() {
       name: 'Lego y Bloques',
       count: '350+ modelos',
       image: '/images/products/lego-spiderman-x8.svg',
-      href: '/catalogo?categoria=Lego+y+Bloques',
+      href: `/catalogo?categoria=${encodeURIComponent('Lego y Bloques')}`,
     },
     {
       name: 'Personajes y Pop',
       count: '180+ figuras',
       image: '/images/products/pop-stitch.svg',
-      href: '/catalogo?categoria=Personajes+y+Pop',
+      href: `/catalogo?categoria=${encodeURIComponent('Personajes y Pop')}`,
     },
     {
       name: 'Peluches',
       count: '220+ modelos',
       image: '/images/products/peluche-spiderman.svg',
-      href: '/catalogo?categoria=Peluches',
+      href: `/catalogo?categoria=${encodeURIComponent('Peluches')}`,
     },
     {
       name: 'Verano',
       count: 'Lanzamiento',
       image: '/images/products/mochila-agua-verano.svg',
-      href: '/catalogo?categoria=Verano',
+      href: `/catalogo?categoria=${encodeURIComponent('Verano')}`,
     },
     {
       name: 'Temporada y Fiestas',
       count: 'Edición especial',
       image: '/images/products/calendario-adviento.svg',
-      href: '/catalogo?categoria=Temporada+%2F+Fiestas',
+      href: `/catalogo?categoria=${encodeURIComponent('Temporada / Fiestas')}`,
     },
   ];
 
@@ -52,7 +54,9 @@ export function HomePage() {
       <HeroSection />
 
       {/* 2. Barra de Garantías Mayoristas (4 Pilares Verificados - Reemplaza al Ticker) */}
-      <section id="garantias" className="bg-[var(--bg-ink)] text-white py-8 border-y border-[var(--border-line)]/20">
+      <TrustCarousel />
+      {/* Beneficios mayoristas */}
+      {false && <section id="garantias" className="bg-[var(--bg-ink)] text-white py-8 border-y border-[var(--border-line)]/20">
         <div className="page-shell">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
             <div className="flex items-start gap-3">
@@ -121,7 +125,7 @@ export function HomePage() {
             </div>
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* 3. Comprar por Categoría (Recupera la navegación por categorías con imágenes reales) */}
       <section id="categorias" className="section bg-[var(--bg-canvas)]">
@@ -129,9 +133,7 @@ export function HomePage() {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
             <div>
               <span className="eyebrow block mb-2">Comprar por rubro</span>
-              <h2 className="font-heading text-2xl sm:text-4xl font-bold text-[var(--text-main)]">
-                Categorías Destacadas
-              </h2>
+              <h2 className="font-heading text-3xl sm:text-5xl font-bold text-[var(--text-main)]">Categorías Destacadas</h2>
             </div>
             <Link
               href="/catalogo"
@@ -171,18 +173,14 @@ export function HomePage() {
       </section>
 
       {/* 4. "Para Vender Mejor" (01 / 02 / 03 - Título Visible P0-1 Arreglado) */}
-      <section className="section bg-[var(--bg-subtle)] border-y border-[var(--border-line)]">
+      <BenefitsSection />
+      {false && <section className="section bg-[var(--bg-subtle)] border-y border-[var(--border-line)]">
         <div className="page-shell">
           <div className="max-w-[720px] mb-10">
             <span className="eyebrow block mb-2">Ventajas Mayoristas</span>
-            <h2 className="font-heading text-2xl sm:text-4xl font-bold text-[var(--text-main)] leading-tight mb-3">
-              El stock correcto cambia el negocio.
-            </h2>
-            <p className="text-base text-[var(--text-muted)] leading-relaxed">
-              Selección curada de juguetes que conectan con lo que la gente busca hoy. Formatos por pack cerrado para cuidar tu margen y simplificar tu reposición.
-            </p>
+            <h2 className="font-heading text-3xl sm:text-5xl font-bold text-[var(--text-main)] leading-tight mb-3">El stock correcto cambia el negocio.</h2>
+            <p className="text-base text-[var(--text-muted)] leading-relaxed">Selección curada de juguetes que conectan con lo que la gente busca hoy. Formatos por pack cerrado para cuidar tu margen y simplificar tu reposición.</p>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="p-6 rounded-2xl bg-white border border-[var(--border-line)] shadow-sm">
               <span className="font-heading text-3xl font-bold text-[var(--accent-coral-text)] block mb-3">
@@ -221,7 +219,7 @@ export function HomePage() {
             </div>
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* 5. Los que más salen (Productos Top - Nombres Visibles P0-2 Arreglado) */}
       <section className="section bg-[var(--bg-canvas)]">
@@ -229,9 +227,7 @@ export function HomePage() {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
             <div>
               <span className="eyebrow block mb-2">Los más pedidos</span>
-              <h2 className="font-heading text-2xl sm:text-4xl font-bold text-[var(--text-main)]">
-                Productos Top de Alta Rotación
-              </h2>
+              <h2 className="font-heading text-3xl sm:text-5xl font-bold text-[var(--text-main)]">Productos Top de Alta Rotación</h2>
             </div>
             <Link
               href="/catalogo"
@@ -256,9 +252,7 @@ export function HomePage() {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
             <div>
               <span className="eyebrow block mb-2">Novedades en Depósito</span>
-              <h2 className="font-heading text-2xl sm:text-4xl font-bold text-[var(--text-main)]">
-                Recién Llegados a Once
-              </h2>
+              <h2 className="font-heading text-3xl sm:text-5xl font-bold text-[var(--text-main)]">Recién Llegados a Once</h2>
             </div>
             <p className="text-sm text-[var(--text-muted)] max-w-[340px]">
               Ingresos de esta semana listos para despacho inmediato a todo el país.

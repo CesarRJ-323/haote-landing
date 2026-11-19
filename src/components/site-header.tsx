@@ -3,11 +3,12 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { businessFacts } from '../data/business-facts';
+import type { CatalogProduct } from '../data/catalog';
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
-  const [quantity, setQuantity] = useState(1);
+  const [cartItems, setCartItems] = useState<CatalogProduct[]>([]);
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -27,12 +28,21 @@ export function SiteHeader() {
   }, []);
 
   useEffect(() => {
-    const handleAdd = () => {
-      setQuantity((v) => v + 1);
+    const handleAdd = (event: Event) => {
+      const product = (event as CustomEvent<CatalogProduct>).detail;
+      if (product) setCartItems((items) => [...items, product]);
     };
     window.addEventListener('haote:add-to-cart', handleAdd);
     return () => window.removeEventListener('haote:add-to-cart', handleAdd);
   }, []);
+
+  const quantity = cartItems.length;
+  const cartMessage = cartItems.length
+    ? `¡Hola! Quiero consultar disponibilidad de estos packs:\n${cartItems
+        .map((item) => `- ${item.cleanName || item.name} (${item.pack})`)
+        .join('\n')}`
+    : '¡Hola! Quiero consultar la lista de precios mayoristas de Importadora Haote.';
+  const cartWhatsAppUrl = `${businessFacts.whatsappUrl.value}?text=${encodeURIComponent(cartMessage)}`;
 
   // Cerrar menú con ESC
   useEffect(() => {
@@ -87,9 +97,6 @@ export function SiteHeader() {
             <Link href="/catalogo" className="hover:text-[var(--text-main)] transition-colors">
               Catálogo
             </Link>
-            <a href="#garantias" className="hover:text-[var(--text-main)] transition-colors">
-              Garantías
-            </a>
             <a href="#contacto" className="hover:text-[var(--text-main)] transition-colors">
               Contacto
             </a>
@@ -178,9 +185,6 @@ export function SiteHeader() {
             <a href="#categorias" onClick={closeMenu} className="p-2 hover:text-[var(--accent-coral-action)]">
               Categorías
             </a>
-            <a href="#garantias" onClick={closeMenu} className="p-2 hover:text-[var(--accent-coral-action)]">
-              Garantías de Compra
-            </a>
             <a href="#contacto" onClick={closeMenu} className="p-2 hover:text-[var(--accent-coral-action)]">
               Ubicación y Contacto
             </a>
@@ -230,9 +234,18 @@ export function SiteHeader() {
                 <span className="text-xs font-bold text-[var(--accent-coral-text)] uppercase tracking-wider block mb-1">
                   Packs seleccionados
                 </span>
-                <p className="text-sm text-[var(--text-main)] font-semibold">
-                  {quantity} {quantity === 1 ? 'pack agregado' : 'packs agregados'} para cotización
-                </p>
+                {quantity > 0 ? (
+                  <ul className="mt-2 space-y-2 text-sm text-[var(--text-main)]">
+                    {cartItems.map((item, index) => (
+                      <li key={`${item.id}-${index}`} className="flex items-start justify-between gap-3">
+                        <span>{item.cleanName || item.name}<span className="block text-xs text-[var(--text-muted)]">{item.pack}</span></span>
+                        <button type="button" className="text-xs font-bold text-[var(--accent-coral-text)]" onClick={() => setCartItems((items) => items.filter((_, i) => i !== index))} aria-label={`Quitar ${item.cleanName || item.name}`}>Quitar</button>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-sm text-[var(--text-muted)]">Todavía no agregaste packs.</p>
+                )}
               </div>
               <p className="text-xs text-[var(--text-muted)] leading-relaxed">
                 Armá tu lista de packs y consultá disponibilidad de stock en tiempo real directamente por WhatsApp.
@@ -241,7 +254,7 @@ export function SiteHeader() {
 
             <div className="pt-4 border-t border-[var(--border-line)] flex flex-col gap-3">
               <a
-                href={businessFacts.whatsappUrl.value}
+                href={cartWhatsAppUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="button button-primary w-full h-12"

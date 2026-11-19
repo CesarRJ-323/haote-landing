@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import { businessFacts } from '../data/business-facts';
 import { InteractiveHoverButton } from '@/components/ui/interactive-hover-button';
+import { MotionTypewriter } from './motion-typewriter';
 
 // Icon component for contact details (shadcn / 21st.dev style)
 const InfoIcon = ({ type }: { type: 'website' | 'phone' | 'address' }) => {
@@ -119,17 +120,19 @@ export function HeroSection() {
             </motion.div>
 
             {/* Titular Imponente y Llamativo en Celular y PC */}
-            <motion.h1
+            <motion.div
               variants={itemVariants}
-              className="font-heading text-[2.75rem] xs:text-[3.25rem] sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[0.93] tracking-tight mb-4 text-balance"
+              className="font-heading text-[3.25rem] xs:text-[3.75rem] sm:text-6xl lg:text-6xl xl:text-7xl font-bold leading-[0.93] tracking-tight mb-4 text-balance"
             >
-              <span className="block text-[var(--text-main)]">
-                Lo que todos quieren.
-              </span>
-              <span className="block text-[var(--accent-coral-action)] mt-1.5 sm:mt-1">
-                Listo para tu negocio.
-              </span>
-            </motion.h1>
+              <MotionTypewriter
+                speed={35}
+                className="font-heading font-bold"
+                lines={[
+                  { text: 'Lo que todos quieren.', className: 'text-[var(--text-main)]' },
+                  { text: 'Listo para tu negocio.', className: 'text-[var(--accent-coral-action)] mt-1.5 sm:mt-1' },
+                ]}
+              />
+            </motion.div>
 
             {/* Barra de Acento Estilo hero-section-2 */}
             <motion.div
@@ -160,12 +163,12 @@ export function HeroSection() {
                 href={businessFacts.whatsappUrl.value}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative inline-flex items-center justify-center cursor-pointer overflow-hidden rounded-full border border-emerald-600/30 bg-white/95 hover:bg-[#25D366] text-[var(--text-main)] hover:text-white px-6 py-3 h-[52px] sm:h-[56px] text-center font-bold text-sm sm:text-base shadow-sm transition-all duration-300 w-full sm:w-auto gap-2 active:scale-[0.98]"
+                className="group relative inline-flex items-center justify-center cursor-pointer overflow-hidden rounded-full border border-[#25D366] bg-[#25D366] hover:bg-[#1fbd5b] text-white px-6 py-3 h-[52px] sm:h-[56px] text-center font-bold text-sm sm:text-base shadow-sm transition-all duration-300 w-full sm:w-auto gap-2 active:scale-[0.98]"
               >
                 <svg
-                  className="w-5 h-5 text-[#25D366] group-hover:text-white transition-colors duration-300 flex-shrink-0"
-                  width="20"
-                  height="20"
+                  className="w-6 h-6 text-white transition-colors duration-300 flex-shrink-0"
+                  width="24"
+                  height="24"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                   aria-hidden="true"

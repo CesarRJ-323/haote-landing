@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { catalogCategories, catalogProducts } from '../data/catalog';
 import { ProductCard } from './product-card';
 
@@ -8,6 +8,13 @@ export function CatalogPage() {
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('Todos');
   const [sort, setSort] = useState('featured');
+
+  useEffect(() => {
+    const requestedCategory = new URLSearchParams(window.location.search).get('categoria');
+    if (requestedCategory && catalogCategories.includes(requestedCategory)) {
+      setCategory(requestedCategory);
+    }
+  }, []);
 
   const filtered = useMemo(
     () =>

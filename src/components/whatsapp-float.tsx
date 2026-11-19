@@ -9,13 +9,13 @@ export function WhatsAppFloat() {
         href={businessFacts.whatsappUrl.value}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-2xl hover:scale-105 active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300"
+        className="fixed bottom-6 right-6 z-40 w-16 h-16 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-2xl hover:scale-105 active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300"
         aria-label="Abrir chat de WhatsApp para consultas mayoristas"
       >
         <svg
-          className="w-8 h-8 fill-current flex-shrink-0"
-          width="32"
-          height="32"
+          className="w-10 h-10 fill-current flex-shrink-0"
+          width="40"
+          height="40"
           viewBox="0 0 24 24"
           aria-hidden="true"
         >

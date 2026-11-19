@@ -1,4 +1,4 @@
-# 🧸 Importadora Haote — Landing Demo Mayorista de Alta Conversión
+# 🧸 Importadora Haote — Sitio mayorista en Next.js
 
 Demo interactiva y ejecutable de venta para **IMPORTADORA HAOTE** ("Juguetes de moda al precio mayorista"), ubicada en **Pasteur 367, Once, CABA, Buenos Aires, Argentina**.
 
@@ -11,7 +11,7 @@ Esta landing page fue diseñada para transformar la experiencia de compra mayori
 - **Propósito:** Demostración comercial interactiva para presentarle al dueño de Importadora Haote y cerrar la renovación de su sitio web.
 - **Enfoque comercial:** Orientado a comerciantes, kiosqueros, revendedores y jugueterías que compran por bulto/pack y cierran pedidos por WhatsApp.
 - **Stack técnico:**
-  - **Astro 5** (ultra rápido, HTML ligero y cero sobrecarga de JavaScript).
+  - **Next.js 15** con App Router y React 19.
   - **Tailwind CSS** (sistema de diseño modular con paleta lúdica-profesional).
   - **GSAP + ScrollTrigger** (animaciones precisas a 60fps con soporte `prefers-reduced-motion`).
   - **Lenis** (scroll suave global sincronizado con ScrollTrigger).
@@ -34,10 +34,10 @@ npm run dev
 npm run build
 
 # 4. Probar la versión de producción compilada
-npm run preview
+ npm start
 ```
 
-El servidor local se abrirá en `http://localhost:4321`.
+El servidor local se abrirá en `http://localhost:3000`.
 
 ---
 
@@ -111,14 +111,16 @@ Para enviarle un enlace interactivo al cliente desde su celular:
 1. Subí este repositorio a tu cuenta de **GitHub** o **GitLab**.
 2. Entrá a [vercel.com](https://vercel.com/) e iniciá sesión con GitHub.
 3. Hacé clic en **"Add New Project"** y seleccioná el repositorio `haote-landing`.
-4. Vercel detectará automáticamente que es un proyecto **Astro** y configurará:
+4. Vercel detectará automáticamente que es un proyecto **Next.js** y configurará:
    - Build Command: `npm run build`
-   - Output Directory: `dist`
+   - Output Directory: dejar el valor predeterminado de Next.js
 5. Hacé clic en **"Deploy"**. En 60 segundos tendrás una URL lista (ej. `haote-demo.vercel.app`) para mandarle por WhatsApp al dueño del negocio.
 
 ### Opción B: Netlify
 1. Entrá a [netlify.com](https://www.netlify.com/).
-2. Arrastrá la carpeta `dist` (generada tras correr `npm run build`) en la sección **"Deploy manually"** de Netlify Drop, o conectá el repositorio de GitHub.
+2. Conectá el repositorio y configurá el build con `npm run build`, usando el adaptador/plugin oficial de Netlify para Next.js.
+
+La aplicación activa está en `app/` y `src/components/*.tsx`. El proyecto fue limpiado para mantener únicamente la implementación Next.js activa.
 
 ---
 
@@ -129,11 +131,11 @@ El cliente actualmente utiliza **WordPress + WooCommerce** en su hosting. Cuando
 ### Estrategia recomendada: Tema Híbrido o Bloques de Gutenberg
 1. **Conservar la base:** Mantener WordPress y WooCommerce intactos para que el cliente siga gestionando inventario y precios en su panel habitual `/wp-admin/`.
 2. **Convertir la portada en Plantilla de Portada (`front-page.php`):**
-   - Extraé el HTML compilado de las secciones en `dist/index.html`.
-   - Colocá los estilos de Tailwind compilados en `style.css` o `dist/styles.css` del tema.
+   - Extraé el HTML compilado de las secciones desde la aplicación Next.js.
+   - Colocá los estilos de Tailwind compilados en el tema.
    - Enlazá los scripts de GSAP y Lenis en `functions.php` mediante `wp_enqueue_script()`.
 3. **Dinámica con WooCommerce:**
-   - En la sección **Productos Estrella** (`Products.astro`), reemplazá la iteración estática por un loop de WooCommerce:
+   - En la sección **Productos Estrella**, reemplazá la iteración estática por un loop de WooCommerce:
      ```php
      $args = array(
        'post_type' => 'product',
