@@ -106,21 +106,26 @@ export function HeroSection() {
           
           {/* Lado Izquierdo: Contenido con jerarquía editorial (7 cols en desktop) */}
           <div className="lg:col-span-7 flex flex-col justify-center z-10">
-            {/* Header / Eyebrow de Marca */}
-            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 mb-3">
-              <span className="w-2.5 h-2.5 rounded-full bg-[var(--accent-coral-action)]" aria-hidden="true" />
-              <span className="eyebrow text-xs tracking-wider font-bold text-[var(--text-muted)]">
-                MAYORISTA DE JUGUETES · ONCE, CABA
+            {/* Header / Eyebrow de Marca como Chip Destacado */}
+            <motion.div
+              variants={itemVariants}
+              className="inline-flex items-center gap-2 mb-3.5 px-3.5 py-1.5 rounded-full bg-white/95 border border-[var(--border-line)] shadow-xs w-fit"
+            >
+              <span className="w-2.5 h-2.5 rounded-full bg-[var(--accent-coral-action)] animate-pulse" aria-hidden="true" />
+              <span className="text-[11px] sm:text-xs font-black tracking-wider uppercase text-[var(--text-main)]">
+                Mayorista de Juguetes · Once, CABA
               </span>
             </motion.div>
 
-            {/* Titular Imponente con Acento */}
+            {/* Titular Imponente y Llamativo en Celular y PC */}
             <motion.h1
               variants={itemVariants}
-              className="font-heading text-[clamp(2.5rem,8vw,5.2rem)] font-bold text-[var(--text-main)] leading-[0.94] tracking-tight mb-4 text-balance"
+              className="font-heading text-[2.75rem] xs:text-[3.25rem] sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[0.93] tracking-tight mb-4 text-balance"
             >
-              Lo que todos quieren.{' '}
-              <span className="text-[var(--accent-coral-action)] block sm:inline">
+              <span className="block text-[var(--text-main)]">
+                Lo que todos quieren.
+              </span>
+              <span className="block text-[var(--accent-coral-action)] mt-1.5 sm:mt-1">
                 Listo para tu negocio.
               </span>
             </motion.h1>
@@ -128,14 +133,14 @@ export function HeroSection() {
             {/* Barra de Acento Estilo hero-section-2 */}
             <motion.div
               variants={itemVariants}
-              className="my-3 sm:my-4 h-1.5 w-20 bg-[var(--accent-coral-action)] rounded-full"
+              className="my-3 sm:my-4 h-2 w-24 bg-[var(--accent-coral-action)] rounded-full"
               aria-hidden="true"
             />
 
-            {/* Subtítulo */}
+            {/* Subtítulo nítido y legible */}
             <motion.p
               variants={itemVariants}
-              className="text-base sm:text-xl text-[var(--text-muted)] font-medium leading-relaxed max-w-[560px] mb-6 sm:mb-8 text-pretty"
+              className="text-base sm:text-lg lg:text-xl text-[var(--text-main)]/85 font-semibold leading-relaxed max-w-[560px] mb-6 sm:mb-8 text-pretty"
             >
               {businessFacts.description.value}
             </motion.p>
@@ -143,11 +148,11 @@ export function HeroSection() {
             {/* Botones de Acción */}
             <motion.div
               variants={itemVariants}
-              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mb-8"
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mb-6 sm:mb-8"
             >
               <Link
                 href="/catalogo"
-                className="button button-primary h-[54px] text-base sm:text-lg shadow-md w-full sm:w-auto text-center"
+                className="button button-primary h-[54px] sm:h-[56px] text-base sm:text-lg font-bold shadow-md w-full sm:w-auto text-center"
               >
                 Explorar catálogo
               </Link>
@@ -155,7 +160,7 @@ export function HeroSection() {
                 href={businessFacts.whatsappUrl.value}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="button button-secondary h-[50px] text-sm sm:text-base w-full sm:w-auto flex items-center justify-center gap-2"
+                className="button button-secondary h-[50px] sm:h-[54px] text-sm sm:text-base font-bold w-full sm:w-auto flex items-center justify-center gap-2"
               >
                 <svg
                   className="w-5 h-5 text-[#25D366] flex-shrink-0"
@@ -171,12 +176,32 @@ export function HeroSection() {
               </a>
             </motion.div>
 
+            {/* BLOQUE VISUAL EN CELULAR: Sin ningún recorte diagonal. Foto nítida, completa y rectangular redondeada */}
+            <motion.div
+              variants={itemVariants}
+              className="block lg:hidden w-full mb-6"
+            >
+              <div className="relative w-full h-[280px] sm:h-[340px] rounded-2xl overflow-hidden border border-[var(--border-line)] shadow-lg bg-[var(--bg-subtle)]">
+                <Image
+                  src="/images/brand/warehouse-hero.png"
+                  alt="Depósito mayorista de juguetes Importadora Haote en Once"
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 45vw"
+                  className="object-cover object-center filter saturate-[0.95] contrast-[0.98]"
+                />
+                <div className="absolute bottom-3 right-3 z-20 px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-[var(--border-line)] shadow-sm text-xs font-bold text-[var(--text-main)]">
+                  Stock en Once · Pasteur 367
+                </div>
+              </div>
+            </motion.div>
+
             {/* Footer de Contacto y Confianza en 3 Columnas (estilo hero-section-2) */}
             <motion.footer
               variants={itemVariants}
               className="pt-5 border-t border-[var(--border-line)]/70 w-full"
             >
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs sm:text-sm font-bold text-[var(--text-muted)]">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 text-xs sm:text-sm font-bold text-[var(--text-muted)]">
                 <div className="flex items-center">
                   <InfoIcon type="website" />
                   <span className="truncate">{businessFacts.domain.value}</span>
@@ -193,11 +218,10 @@ export function HeroSection() {
             </motion.footer>
           </div>
 
-          {/* Lado Derecho: Imagen con Animación de Corte Inclinado (Clip Path) en PC */}
-          <div className="lg:col-span-5 relative w-full h-[280px] sm:h-[360px] lg:h-[540px]">
-            {/* Versión PC: Corte diagonal arquitectónico animado */}
+          {/* Lado Derecho EXCLUSIVO para PC: Imagen con Animación de Corte Inclinado (Clip Path) */}
+          <div className="hidden lg:block lg:col-span-5 relative w-full h-[540px]">
             <motion.div
-              className="relative w-full h-full overflow-hidden rounded-2xl lg:rounded-3xl border border-[var(--border-line)] shadow-xl bg-[var(--bg-subtle)]"
+              className="relative w-full h-full overflow-hidden rounded-3xl border border-[var(--border-line)] shadow-xl bg-[var(--bg-subtle)]"
               initial={
                 shouldReduceMotion
                   ? { clipPath: 'polygon(15% 0, 100% 0, 100% 100%, 0% 100%)' }
@@ -211,13 +235,13 @@ export function HeroSection() {
                 alt="Depósito mayorista de juguetes Importadora Haote en Once"
                 fill
                 priority
-                sizes="(max-width: 1024px) 100vw, 45vw"
+                sizes="45vw"
                 className="object-cover object-center filter saturate-[0.92] contrast-[0.98]"
               />
 
               {/* Badge discreto y profesional de Stock en Once */}
               <motion.div
-                className="absolute bottom-4 right-4 z-20 px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-[var(--border-line)] shadow-sm text-xs font-bold text-[var(--text-main)]"
+                className="absolute bottom-5 right-5 z-20 px-4 py-2 rounded-full bg-white/95 backdrop-blur-md border border-[var(--border-line)] shadow-md text-xs font-bold text-[var(--text-main)]"
                 initial={shouldReduceMotion ? {} : { opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.7 }}
