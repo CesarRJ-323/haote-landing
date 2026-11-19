@@ -3,13 +3,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
-import { products } from '../data/products';
 import { businessFacts } from '../data/business-facts';
 
 export function HeroSection() {
   const shouldReduceMotion = useReducedMotion();
-  const productA = products[0]; // Spiderman
-  const productB = products[1]; // Stitch
 
   return (
     <section className="relative overflow-hidden bg-[var(--bg-canvas)] pt-6 pb-12 md:py-16">
@@ -120,17 +117,7 @@ export function HeroSection() {
                 />
               )}
 
-              {/* Chips Flotantes sobre la Imagen con entrada suave */}
-              <motion.div
-                className="absolute top-4 left-4 z-20 px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-[var(--border-line)] shadow-sm text-xs font-bold text-[var(--text-main)] flex items-center gap-1.5"
-                initial={shouldReduceMotion ? {} : { opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.6 }}
-              >
-                <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                <span>Packs cerrados</span>
-              </motion.div>
-
+              {/* Chip de Stock en Once */}
               <motion.div
                 className="absolute bottom-4 right-4 z-20 px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-[var(--border-line)] shadow-sm text-xs font-bold text-[var(--text-main)]"
                 initial={shouldReduceMotion ? {} : { opacity: 0, y: 10 }}
@@ -140,55 +127,6 @@ export function HeroSection() {
                 Stock en Once
               </motion.div>
             </div>
-
-            {/* Tarjetas de Producto Flotantes en Escritorio */}
-            {productA && (
-              <motion.div
-                className="hidden xl:flex items-center gap-3 absolute -bottom-6 -left-8 z-20 p-3 rounded-2xl bg-white/95 backdrop-blur-md border border-[var(--border-line)] shadow-xl max-w-[240px]"
-                initial={shouldReduceMotion ? {} : { opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <div className="relative w-12 h-12 flex-shrink-0 bg-white rounded-lg p-1 border border-[var(--border-line)]">
-                  <Image src={productA.image} alt={productA.name} fill className="object-contain" />
-                </div>
-                <div className="flex flex-col min-w-0">
-                  <span className="text-[11px] font-bold text-[var(--accent-coral-text)] uppercase tracking-wider">
-                    {productA.badge || 'Más vendido'}
-                  </span>
-                  <span className="text-xs font-bold text-[var(--text-main)] truncate">
-                    {productA.cleanName}
-                  </span>
-                  <strong className="text-xs font-heading text-[var(--text-main)]">
-                    {productA.formattedPrice}
-                  </strong>
-                </div>
-              </motion.div>
-            )}
-
-            {productB && (
-              <motion.div
-                className="hidden xl:flex items-center gap-3 absolute top-6 -right-6 z-20 p-3 rounded-2xl bg-white/95 backdrop-blur-md border border-[var(--border-line)] shadow-xl max-w-[220px]"
-                initial={shouldReduceMotion ? {} : { opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <div className="relative w-12 h-12 flex-shrink-0 bg-white rounded-lg p-1 border border-[var(--border-line)]">
-                  <Image src={productB.image} alt={productB.name} fill className="object-contain" />
-                </div>
-                <div className="flex flex-col min-w-0">
-                  <span className="text-[11px] font-bold text-[var(--accent-sun)] uppercase tracking-wider">
-                    {productB.badge || 'Viral TikTok'}
-                  </span>
-                  <span className="text-xs font-bold text-[var(--text-main)] truncate">
-                    {productB.cleanName}
-                  </span>
-                  <strong className="text-xs font-heading text-[var(--text-main)]">
-                    {productB.formattedPrice}
-                  </strong>
-                </div>
-              </motion.div>
-            )}
           </div>
 
         </div>
