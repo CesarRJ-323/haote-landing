@@ -4,23 +4,28 @@
 
 :root {
   /* 60% — Superficies (Un solo set de neutros armónicos) */
-  --bg-canvas:  #F9F6F0;
-  --bg-surface: #FFFFFF;
-  --bg-subtle:  #F0ECE1;
+  --bg-canvas:  #F5F1E8;
+  --bg-surface: #FFFCF7;
+  --bg-subtle:  #EDE6D8;
 
   /* 30% — Estructura y Texto */
-  --text-main:   #111E31;  /* 14.2:1 AAA sobre crema */
-  --text-muted:  #55657E;  /* 5.49:1 AA sobre crema, 5.92:1 sobre blanco */
-  --border-line: #DCD5C9;
-  --bg-ink:      #111E31;
+  --text-main:   #12233B;
+  --text-muted:  #5B6A7E;
+  --border-line: #D8CFBF;
+  --bg-ink:      #12233B;
 
   /* 10% — Acentos */
-  --accent-coral-brand:   #E3533B; /* Decorativo y elementos grandes */
-  --accent-coral-action:  #C9412B; /* Fondo de botones (blanco 4.91:1 AA) */
-  --accent-coral-hover:   #A93320; /* Hover/active de botones */
-  --accent-coral-text:    #A93320; /* Texto coral sobre fondos claros (6.12:1 AA) */
-  --accent-coral-on-dark: #EF745F; /* Texto coral sobre navy (5.85:1 AA) */
-  --accent-sun:           #F5B738; /* Badges con texto --text-main (9.34:1) */
+  --accent-coral-brand:   #E65A3D;
+  --accent-coral-action:  #D9472F;
+  --accent-coral-hover:   #B83222;
+  --accent-coral-text:    #B83222;
+  --accent-coral-on-dark: #FF8A70;
+  --accent-sun:           #F6C744;
+  --accent-sun-soft:      #FBE5A0;
+  --accent-blue:          #2C71C9;
+  --accent-whatsapp:      #25D366;
+  --accent-success:       #18834A;
+  --accent-success-soft:  #E3F6EA;
 
   /* Curvas y transiciones físicas */
   --ease: cubic-bezier(0.16, 1, 0.3, 1);

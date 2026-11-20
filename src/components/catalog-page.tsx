@@ -54,9 +54,6 @@ export function CatalogPage() {
               Stock Mayorista en Once
             </h1>
           </div>
-          <p className="text-sm sm:text-base text-[var(--text-muted)] max-w-[420px] leading-relaxed">
-            Explorá nuestra selección por categoría, buscá por personaje o armá tu pedido directo por bulto cerrado.
-          </p>
         </div>
 
         {/* Barra de Búsqueda y Orden */}
@@ -100,7 +97,7 @@ export function CatalogPage() {
               <h2 className="hidden lg:block font-heading text-lg font-bold text-[var(--text-main)] mb-3 pb-2 border-b border-[var(--border-line)]">
                 Categorías
               </h2>
-              <div className="flex lg:flex-col gap-2 overflow-x-auto pb-2 lg:pb-0 scrollbar-none">
+              <div className="catalog-category-scroll flex lg:flex-col gap-2 overflow-x-auto pb-2 lg:pb-0">
                 {catalogCategories.map((item) => {
                   const isActive = category === item;
                   const count =
