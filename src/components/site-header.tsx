@@ -194,13 +194,10 @@ export function SiteHeader() {
           {/* Acciones */}
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Botón Carrito Compacto */}
-            <button
-              type="button"
+            <Link
+              href="/carrito"
               className="relative w-11 h-11 flex items-center justify-center rounded-full border border-[var(--border-line)] bg-white text-[var(--text-main)] hover:bg-[var(--bg-subtle)] transition-colors active:scale-95 shadow-sm"
-              aria-expanded={cartOpen}
-              aria-controls="cart-panel"
               aria-label={`Ver carrito, ${quantity} productos`}
-              onClick={openCart}
             >
               <svg
                 className="w-5 h-5"
@@ -221,7 +218,7 @@ export function SiteHeader() {
                   {quantity}
                 </span>
               )}
-            </button>
+            </Link>
 
             {/* Hamburguesa Móvil Accesible (48x48px) */}
             <button
