@@ -4,12 +4,25 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { businessFacts } from '../data/business-facts';
+import { products, type Product } from '../data/products';
 import type { CatalogProduct } from '../data/catalog';
+
+type CartLine = CatalogProduct & { quantity: number };
+
+const MINIMUM_PACKS = 3;
+const TRUST_POINTS = [
+  { icon: '▣', text: 'Pedido mínimo: 3 packs' },
+  { icon: '⌁', text: 'Envíos a todo el país' },
+  { icon: '◷', text: 'Respuesta rápida' },
+];
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
-  const [cartItems, setCartItems] = useState<CatalogProduct[]>([]);
+  const [cartItems, setCartItems] = useState<CartLine[]>([]);
+  const [businessName, setBusinessName] = useState('');
+  const [city, setCity] = useState('');
+  const [notes, setNotes] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [cartClosing, setCartClosing] = useState(false);
@@ -31,21 +44,71 @@ export function SiteHeader() {
   }, []);
 
   useEffect(() => {
+    try {
+      const saved = window.localStorage.getItem('haote-cart');
+      if (saved) setCartItems(JSON.parse(saved) as CartLine[]);
+      setBusinessName(window.localStorage.getItem('haote-cart-business') || '');
+      setCity(window.localStorage.getItem('haote-cart-city') || '');
+      setNotes(window.localStorage.getItem('haote-cart-notes') || '');
+    } catch {
+      // El carrito sigue funcionando aunque el almacenamiento no esté disponible.
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem('haote-cart', JSON.stringify(cartItems));
+      window.localStorage.setItem('haote-cart-business', businessName);
+      window.localStorage.setItem('haote-cart-city', city);
+      window.localStorage.setItem('haote-cart-notes', notes);
+    } catch {
+      // El carrito sigue funcionando aunque el almacenamiento no esté disponible.
+    }
+  }, [businessName, cartItems, city, notes]);
+
+  useEffect(() => {
     const handleAdd = (event: Event) => {
       const product = (event as CustomEvent<CatalogProduct>).detail;
-      if (product) setCartItems((items) => [...items, product]);
+      if (!product) return;
+      setCartItems((items) => {
+        const existing = items.find((item) => item.id === product.id);
+        if (existing) {
+          return items.map((item) => item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item);
+        }
+        return [...items, { ...product, quantity: 1 }];
+      });
     };
     window.addEventListener('haote:add-to-cart', handleAdd);
     return () => window.removeEventListener('haote:add-to-cart', handleAdd);
   }, []);
 
-  const quantity = cartItems.length;
+  const quantity = cartItems.reduce((total, item) => total + item.quantity, 0);
   const cartMessage = cartItems.length
     ? `¡Hola! Quiero consultar disponibilidad de estos packs:\n${cartItems
-        .map((item) => `- ${item.cleanName || item.name} (${item.pack})`)
-        .join('\n')}`
+        .map((item) => `- ${item.cleanName || item.name} (${item.pack}) x${item.quantity}`)
+        .join('\n')}${businessName || city || notes ? `\n\nDatos de contacto:\n${businessName ? `- Negocio: ${businessName}\n` : ''}${city ? `- Ciudad: ${city}\n` : ''}${notes ? `- Notas: ${notes}` : ''}` : ''}`
     : '¡Hola! Quiero consultar la lista de precios mayoristas de Importadora Haote.';
   const cartWhatsAppUrl = `${businessFacts.whatsappUrl.value}?text=${encodeURIComponent(cartMessage)}`;
+  const subtotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  const missingPacks = Math.max(0, MINIMUM_PACKS - quantity);
+  const popularPacks = products.slice(0, 3);
+
+  const addProduct = (product: Product) => {
+    window.dispatchEvent(new CustomEvent('haote:add-to-cart', { detail: product }));
+  };
+
+  const updateQuantity = (index: number, delta: number) => {
+    setCartItems((items) => items.flatMap((item, itemIndex) => {
+      if (itemIndex !== index) return [item];
+      const nextQuantity = item.quantity + delta;
+      return nextQuantity > 0 ? [{ ...item, quantity: nextQuantity }] : [];
+    }));
+  };
+
+  const handleCartConfirm = () => {
+    if (!cartItems.length) return;
+    window.open(cartWhatsAppUrl, '_blank', 'noopener,noreferrer');
+  };
 
   const openCart = useCallback(() => {
     if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
@@ -75,6 +138,13 @@ export function SiteHeader() {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [closeCart]);
+
+  useEffect(() => {
+    if (!cartOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = previousOverflow; };
+  }, [cartOpen]);
 
   useEffect(() => {
     return () => {
@@ -249,7 +319,7 @@ export function SiteHeader() {
               <div>
                 <span className="cart-kicker">Pedido mayorista</span>
                 <h2 className="font-heading text-2xl font-bold text-[var(--text-main)]">
-                  Tu selección
+                  Tu Pedido Mayorista{quantity > 0 ? ` (${quantity})` : ''}
                 </h2>
               </div>
               <button
@@ -279,43 +349,82 @@ export function SiteHeader() {
                           <span className="cart-item-name">{item.cleanName || item.name}</span>
                           <span className="cart-item-pack">{item.pack}</span>
                         </div>
+                        <span className="cart-item-price">{item.formattedPrice}</span>
+                        <div className="cart-quantity-control" aria-label={`Cantidad de ${item.cleanName || item.name}`}>
+                          <button type="button" onClick={() => updateQuantity(index, -1)} aria-label={`Quitar una unidad de ${item.cleanName || item.name}`}>−</button>
+                          <span>{item.quantity}</span>
+                          <button type="button" onClick={() => updateQuantity(index, 1)} aria-label={`Agregar una unidad de ${item.cleanName || item.name}`}>+</button>
+                        </div>
                         <button
                           type="button"
                           className="cart-remove-button"
                           onClick={() => setCartItems((items) => items.filter((_, i) => i !== index))}
                           aria-label={`Quitar ${item.cleanName || item.name}`}
                         >
-                          Quitar
+                          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6m4-6v6M9 7V4h6v3m-9 0 1 13h8l1-13" /></svg>
                         </button>
                       </li>
                     ))}
                   </ul>
                 ) : (
                   <div className="cart-empty-state">
-                    <span className="cart-empty-icon" aria-hidden="true">＋</span>
-                    <p>Todavía no agregaste packs.</p>
-                    <span>Explorá el catálogo y sumá productos a tu consulta.</span>
+                    <svg className="cart-empty-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="m8 15 16-8 16 8v18l-16 8-16-8V15Z" /><path d="m8 15 16 8 16-8M24 23v18M17 11l16 8" /></svg>
+                    <p>Tu pedido está vacío</p>
+                    <span>Sumá packs para consultar disponibilidad y precios.</span>
                   </div>
                 )}
               </div>
               <p className="cart-helper-text">
                 Armá tu lista y consultá disponibilidad de stock directamente por WhatsApp.
               </p>
+              {quantity === 0 && (
+                <section className="cart-popular-packs" aria-labelledby="cart-popular-title">
+                  <h3 id="cart-popular-title">Packs más pedidos</h3>
+                  <div className="cart-popular-list">
+                    {popularPacks.map((product) => (
+                      <article className="cart-popular-item" key={product.id}>
+                        <div className="cart-popular-image"><Image src={product.image} alt="" fill sizes="52px" className="object-contain p-1" /></div>
+                        <div><strong>{product.cleanName}</strong><span>{product.pack}</span></div>
+                        <button type="button" onClick={() => addProduct(product)}>Agregar</button>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              )}
+              {quantity > 0 && (
+                <>
+                  <div className="cart-order-summary">
+                    <span>{quantity} {quantity === 1 ? 'pack' : 'packs'}</span>
+                    <strong>{new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(subtotal)}</strong>
+                  </div>
+                  <div className="cart-minimum-progress" aria-live="polite">
+                    <div><span>{missingPacks ? `Te faltan ${missingPacks} ${missingPacks === 1 ? 'pack' : 'packs'} para el pedido mínimo` : 'Pedido mínimo alcanzado'}</span><span>{Math.min(100, quantity / MINIMUM_PACKS * 100)}%</span></div>
+                    <span className="cart-progress-track"><span style={{ width: `${Math.min(100, quantity / MINIMUM_PACKS * 100)}%` }} /></span>
+                  </div>
+                  <div className="cart-fields">
+                    <label>Nombre del negocio<input value={businessName} onChange={(event) => setBusinessName(event.target.value)} placeholder="Ej. Kiosco Once" /></label>
+                    <label>Ciudad<input value={city} onChange={(event) => setCity(event.target.value)} placeholder="Ej. Buenos Aires" /></label>
+                    <label>Notas<textarea value={notes} onChange={(event) => setNotes(event.target.value)} placeholder="Algo que debamos saber" rows={2} /></label>
+                  </div>
+                </>
+              )}
+              <div className="cart-trust-row">{TRUST_POINTS.map((point) => <span key={point.text}><b aria-hidden="true">{point.icon}</b>{point.text}</span>)}</div>
             </div>
 
             <div className="cart-panel-footer">
-              <a
-                href={cartWhatsAppUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                type="button"
+                disabled={!cartItems.length}
+                onClick={handleCartConfirm}
                 className="button button-primary cart-confirm-button w-full h-12"
               >
-                Confirmar pedido por WhatsApp →
-              </a>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4.1A8 8 0 1 1 20 11.5Z" /><path d="M9 9.5c.4 1.2 1.3 2.2 2.5 2.8.5.2 1 .4 1.4-.1l.5-.7c.2-.3.5-.3.8-.1l1.5.7c.3.2.4.5.2.8-.4.8-1.2 1.1-2 1-2.4-.4-4.8-2.4-5.5-4.7-.2-.8.1-1.6.8-2 .2-.1.5 0 .6.2l.7 1.4c.1.3.1.5-.1.7l-.4.5Z" /></svg>
+                Confirmar pedido por WhatsApp
+              </button>
               <button
                 type="button"
                 onClick={closeCart}
-                className="button button-secondary w-full h-10 text-xs cart-continue-button"
+                className="button button-secondary w-full h-12 cart-continue-button"
               >
                 Seguir explorando catálogo
               </button>
