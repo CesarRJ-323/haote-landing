@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { businessFacts } from '../data/business-facts';
 import type { CatalogProduct } from '../data/catalog';
 
@@ -11,6 +12,8 @@ export function SiteHeader() {
   const [cartItems, setCartItems] = useState<CatalogProduct[]>([]);
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [cartClosing, setCartClosing] = useState(false);
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,16 +47,39 @@ export function SiteHeader() {
     : '¡Hola! Quiero consultar la lista de precios mayoristas de Importadora Haote.';
   const cartWhatsAppUrl = `${businessFacts.whatsappUrl.value}?text=${encodeURIComponent(cartMessage)}`;
 
+  const openCart = useCallback(() => {
+    if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    setCartClosing(false);
+    setCartOpen(true);
+  }, []);
+
+  const closeCart = useCallback(() => {
+    if (!cartOpen) return;
+    if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    setCartClosing(true);
+    closeTimerRef.current = setTimeout(() => {
+      setCartOpen(false);
+      setCartClosing(false);
+      closeTimerRef.current = null;
+    }, 220);
+  }, [cartOpen]);
+
   // Cerrar menú con ESC
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setOpen(false);
-        setCartOpen(false);
+        closeCart();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [closeCart]);
+
+  useEffect(() => {
+    return () => {
+      if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    };
   }, []);
 
   const closeMenu = () => setOpen(false);
@@ -111,7 +137,7 @@ export function SiteHeader() {
               aria-expanded={cartOpen}
               aria-controls="cart-panel"
               aria-label={`Ver carrito, ${quantity} productos`}
-              onClick={() => setCartOpen(true)}
+              onClick={openCart}
             >
               <svg
                 className="w-5 h-5"
@@ -208,65 +234,88 @@ export function SiteHeader() {
       {cartOpen && (
         <>
           <div
-            className="cart-backdrop"
-            onClick={() => setCartOpen(false)}
+            className={`cart-backdrop${cartClosing ? ' is-closing' : ''}`}
+            onClick={closeCart}
             aria-hidden="true"
           />
           <aside
             id="cart-panel"
-            className="cart-panel"
+            className={`cart-panel${cartClosing ? ' is-closing' : ''}`}
+            role="dialog"
+            aria-modal="true"
             aria-label="Panel de pedido mayorista"
           >
-            <div className="flex items-center justify-between pb-4 border-b border-[var(--border-line)]">
-              <span className="font-heading text-xl font-bold text-[var(--text-main)]">
-                Tu Pedido Mayorista
-              </span>
+            <div className="cart-panel-header">
+              <div>
+                <span className="cart-kicker">Pedido mayorista</span>
+                <h2 className="font-heading text-2xl font-bold text-[var(--text-main)]">
+                  Tu selección
+                </h2>
+              </div>
               <button
                 type="button"
-                onClick={() => setCartOpen(false)}
-                className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[var(--bg-subtle)] text-[var(--text-main)]"
+                onClick={closeCart}
+                className="cart-close-button"
                 aria-label="Cerrar panel"
               >
-                ✕
+                <span aria-hidden="true">×</span>
               </button>
             </div>
 
-            <div className="py-6 flex-1 overflow-y-auto">
-              <div className="p-4 rounded-xl bg-[var(--bg-subtle)] mb-4">
-                <span className="text-xs font-bold text-[var(--accent-coral-text)] uppercase tracking-wider block mb-1">
-                  Packs seleccionados
-                </span>
+            <div className="cart-panel-body">
+              <div className="cart-summary-card">
+                <div className="flex items-center justify-between gap-4">
+                  <span className="cart-summary-label">Packs seleccionados</span>
+                  <span className="cart-summary-count">{quantity}</span>
+                </div>
                 {quantity > 0 ? (
-                  <ul className="mt-2 space-y-2 text-sm text-[var(--text-main)]">
+                  <ul className="cart-items-list">
                     {cartItems.map((item, index) => (
-                      <li key={`${item.id}-${index}`} className="flex items-start justify-between gap-3">
-                        <span>{item.cleanName || item.name}<span className="block text-xs text-[var(--text-muted)]">{item.pack}</span></span>
-                        <button type="button" className="text-xs font-bold text-[var(--accent-coral-text)]" onClick={() => setCartItems((items) => items.filter((_, i) => i !== index))} aria-label={`Quitar ${item.cleanName || item.name}`}>Quitar</button>
+                      <li key={`${item.id}-${index}`} className="cart-item">
+                        <div className="cart-item-image">
+                          <Image src={item.image} alt="" fill sizes="56px" className="object-contain p-1" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <span className="cart-item-name">{item.cleanName || item.name}</span>
+                          <span className="cart-item-pack">{item.pack}</span>
+                        </div>
+                        <button
+                          type="button"
+                          className="cart-remove-button"
+                          onClick={() => setCartItems((items) => items.filter((_, i) => i !== index))}
+                          aria-label={`Quitar ${item.cleanName || item.name}`}
+                        >
+                          Quitar
+                        </button>
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <p className="text-sm text-[var(--text-muted)]">Todavía no agregaste packs.</p>
+                  <div className="cart-empty-state">
+                    <span className="cart-empty-icon" aria-hidden="true">＋</span>
+                    <p>Todavía no agregaste packs.</p>
+                    <span>Explorá el catálogo y sumá productos a tu consulta.</span>
+                  </div>
                 )}
               </div>
-              <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-                Armá tu lista de packs y consultá disponibilidad de stock en tiempo real directamente por WhatsApp.
+              <p className="cart-helper-text">
+                Armá tu lista y consultá disponibilidad de stock directamente por WhatsApp.
               </p>
             </div>
 
-            <div className="pt-4 border-t border-[var(--border-line)] flex flex-col gap-3">
+            <div className="cart-panel-footer">
               <a
                 href={cartWhatsAppUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="button button-primary w-full h-12"
+                className="button button-primary cart-confirm-button w-full h-12"
               >
                 Confirmar pedido por WhatsApp →
               </a>
               <button
                 type="button"
-                onClick={() => setCartOpen(false)}
-                className="button button-secondary w-full h-10 text-xs"
+                onClick={closeCart}
+                className="button button-secondary w-full h-10 text-xs cart-continue-button"
               >
                 Seguir explorando catálogo
               </button>
