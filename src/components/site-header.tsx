@@ -4,7 +4,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { businessFacts } from '../data/business-facts';
-import { products, type Product } from '../data/products';
 import type { CatalogProduct } from '../data/catalog';
 
 type CartLine = CatalogProduct & { quantity: number };
@@ -91,12 +90,6 @@ export function SiteHeader() {
   const cartWhatsAppUrl = `${businessFacts.whatsappUrl.value}?text=${encodeURIComponent(cartMessage)}`;
   const subtotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   const missingPacks = Math.max(0, MINIMUM_PACKS - quantity);
-  const popularPacks = products.slice(0, 3);
-
-  const addProduct = (product: Product) => {
-    window.dispatchEvent(new CustomEvent('haote:add-to-cart', { detail: product }));
-  };
-
   const updateQuantity = (index: number, delta: number) => {
     setCartItems((items) => items.flatMap((item, itemIndex) => {
       if (itemIndex !== index) return [item];
@@ -368,29 +361,13 @@ export function SiteHeader() {
                   </ul>
                 ) : (
                   <div className="cart-empty-state">
-                    <svg className="cart-empty-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="m8 15 16-8 16 8v18l-16 8-16-8V15Z" /><path d="m8 15 16 8 16-8M24 23v18M17 11l16 8" /></svg>
-                    <p>Tu pedido está vacío</p>
-                    <span>Sumá packs para consultar disponibilidad y precios.</span>
+                    <p>No hay ningún producto</p>
                   </div>
                 )}
               </div>
-              <p className="cart-helper-text">
+              {quantity > 0 && <p className="cart-helper-text">
                 Armá tu lista y consultá disponibilidad de stock directamente por WhatsApp.
-              </p>
-              {quantity === 0 && (
-                <section className="cart-popular-packs" aria-labelledby="cart-popular-title">
-                  <h3 id="cart-popular-title">Packs más pedidos</h3>
-                  <div className="cart-popular-list">
-                    {popularPacks.map((product) => (
-                      <article className="cart-popular-item" key={product.id}>
-                        <div className="cart-popular-image"><Image src={product.image} alt="" fill sizes="52px" className="object-contain p-1" /></div>
-                        <div><strong>{product.cleanName}</strong><span>{product.pack}</span></div>
-                        <button type="button" onClick={() => addProduct(product)}>Agregar</button>
-                      </article>
-                    ))}
-                  </div>
-                </section>
-              )}
+              </p>}
               {quantity > 0 && (
                 <>
                   <div className="cart-order-summary">
@@ -408,7 +385,7 @@ export function SiteHeader() {
                   </div>
                 </>
               )}
-              <div className="cart-trust-row">{TRUST_POINTS.map((point) => <span key={point.text}><b aria-hidden="true">{point.icon}</b>{point.text}</span>)}</div>
+              {quantity > 0 && <div className="cart-trust-row">{TRUST_POINTS.map((point) => <span key={point.text}><b aria-hidden="true">{point.icon}</b>{point.text}</span>)}</div>}
             </div>
 
             <div className="cart-panel-footer">
