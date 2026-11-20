@@ -186,6 +186,9 @@ export function SiteHeader() {
             <Link href="/catalogo" className="hover:text-[var(--text-main)] transition-colors">
               Catálogo
             </Link>
+            <Link href="/login" className="hover:text-[var(--text-main)] transition-colors">
+              <span className="inline-flex items-center gap-1.5"><svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><circle cx="12" cy="8" r="3.5" /><path strokeLinecap="round" d="M5 20c.8-3.2 3.1-5 7-5s6.2 1.8 7 5" /></svg>Mi cuenta</span>
+            </Link>
             <a href="#contacto" className="hover:text-[var(--text-main)] transition-colors">
               Contacto
             </a>
@@ -273,6 +276,9 @@ export function SiteHeader() {
             <a href="#categorias" onClick={closeMenu} className="p-2 hover:text-[var(--accent-coral-action)]">
               Categorías
             </a>
+            <Link href="/login" onClick={closeMenu} className="p-2 hover:text-[var(--accent-coral-action)]">
+              <span className="inline-flex items-center gap-2"><svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><circle cx="12" cy="8" r="3.5" /><path strokeLinecap="round" d="M5 20c.8-3.2 3.1-5 7-5s6.2 1.8 7 5" /></svg>Mi cuenta</span>
+            </Link>
             <a href="#contacto" onClick={closeMenu} className="p-2 hover:text-[var(--accent-coral-action)]">
               Ubicación y Contacto
             </a>
