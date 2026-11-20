@@ -295,7 +295,7 @@ export function HomePage() {
                 rel="noopener noreferrer"
                 className="button h-14 text-sm px-6 bg-white/10 hover:bg-[#25D366] text-white border border-white/20 hover:border-transparent text-center flex items-center justify-center gap-2 transition-all duration-300 rounded-full font-bold"
               >
-                <span>Consultar por WhatsApp</span>
+                <span>Pedir por WhatsApp</span>
                 <span className="text-base">↗</span>
               </a>
             </div>
