@@ -36,7 +36,7 @@ export function CartPage() {
   const subtotal = items.reduce((total, item) => total + item.price * item.quantity, 0);
   const missingPacks = Math.max(0, MINIMUM_PACKS - quantity);
   const message = items.length
-    ? `¡Hola! Quiero consultar disponibilidad de estos packs:\n${items.map((item) => `- ${item.cleanName || item.name} (${item.pack}) x${item.quantity}`).join('\n')}${businessName || city || notes ? `\n\nDatos de contacto:\n${businessName ? `- Negocio: ${businessName}\n` : ''}${city ? `- Ciudad: ${city}\n` : ''}${notes ? `- Notas: ${notes}` : ''}` : ''}`
+    ? `Hola, quisiera adquirir los siguientes productos mayoristas:\n\n${items.map((item) => `• ${item.cleanName || item.name}\n  ${item.pack} · ${item.quantity} ${item.quantity === 1 ? 'pack' : 'packs'} · ${item.formattedPrice} c/u`).join('\n\n')}\n\nTotal estimado: ${new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(subtotal)}${businessName || city || notes ? `\n\nMis datos:\n${businessName ? `• Negocio: ${businessName}\n` : ''}${city ? `• Ciudad: ${city}\n` : ''}${notes ? `• Notas: ${notes}` : ''}` : ''}\n\n¿Podrían confirmarme disponibilidad y forma de entrega? ¡Gracias!`
     : '¡Hola! Quiero consultar la lista de precios mayoristas de Importadora Haote.';
   const whatsappUrl = `${businessFacts.whatsappUrl.value}?text=${encodeURIComponent(message)}`;
 
@@ -87,7 +87,7 @@ export function CartPage() {
               <label>Ciudad<input value={city} onChange={(event) => setCity(event.target.value)} placeholder="Ej. Buenos Aires" /></label>
               <label>Notas<textarea value={notes} onChange={(event) => setNotes(event.target.value)} placeholder="Algo que debamos saber" rows={3} /></label>
             </div>
-            <button type="button" disabled={!items.length} onClick={() => window.open(whatsappUrl, '_blank', 'noopener,noreferrer')} className="button button-primary cart-confirm-button w-full h-12"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4.1A8 8 0 1 1 20 11.5Z" /><path d="M9 9.5c.4 1.2 1.3 2.2 2.5 2.8.5.2 1 .4 1.4-.1l.5-.7c.2-.3.5-.3.8-.1l1.5.7c.3.2.4.5.2.8-.4.8-1.2 1.1-2 1-2.4-.4-4.8-2.4-5.5-4.7-.2-.8.1-1.6.8-2 .2-.1.5 0 .6.2l.7 1.4c.1.3.1.5-.1.7l-.4.5Z" /></svg>Confirmar pedido por WhatsApp</button>
+            <button type="button" disabled={!items.length} onClick={() => window.open(whatsappUrl, '_blank', 'noopener,noreferrer')} className="button button-primary cart-confirm-button w-full h-12"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4.1A8 8 0 1 1 20 11.5Z" /><path d="M9 9.5c.4 1.2 1.3 2.2 2.5 2.8.5.2 1 .4 1.4-.1l.5-.7c.2-.3.5-.3.8-.1l1.5.7c.3.2.4.5.2.8-.4.8-1.2 1.1-2 1-2.4-.4-4.8-2.4-5.5-4.7-.2-.8.1-1.6.8-2 .2-.1.5 0 .6.2l.7 1.4c.1.3.1.5-.1.7l-.4.5Z" /></svg>Confirmar productos por WhatsApp</button>
           </aside>
         </div>
       </div>

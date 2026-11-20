@@ -33,7 +33,7 @@ export const businessFacts = {
     verified: true,
   },
   domain: { value: 'importadorahaote.com', verified: true },
-  whatsappUrl: { value: 'https://wa.me/5491100000000', verified: true },
+  whatsappUrl: { value: 'https://wa.me/541158788888', verified: true },
   googleMapsUrl: {
     value: 'https://maps.google.com/?q=Pasteur+367,+Once,+CABA,+Buenos+Aires',
     verified: true,
