@@ -71,6 +71,8 @@ const InfoIcon = ({ type }: { type: 'website' | 'phone' | 'address' }) => {
 
 export function HeroSection() {
   const shouldReduceMotion = useReducedMotion();
+  const heroWhatsAppMessage = 'Hola, quisiera consultar el catálogo, los precios y la disponibilidad de productos mayoristas de Importadora Haote.';
+  const heroWhatsAppUrl = `${businessFacts.whatsappUrl.value}?text=${encodeURIComponent(heroWhatsAppMessage)}`;
 
   // Orquestación escalonada inspirada en hero-section-2 (21st.dev)
   const containerVariants: Variants = {
@@ -160,7 +162,7 @@ export function HeroSection() {
                 className="w-full sm:w-[230px] h-[54px] sm:h-[56px] text-base font-bold shadow-md"
               />
               <a
-                href={businessFacts.whatsappUrl.value}
+                href={heroWhatsAppUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative inline-flex items-center justify-center cursor-pointer overflow-hidden rounded-full border border-[#25D366] bg-[#25D366] hover:bg-[#1fbd5b] text-white px-6 py-3 h-[52px] sm:h-[56px] text-center font-bold text-sm sm:text-base shadow-sm transition-all duration-300 w-full sm:w-auto gap-2 active:scale-[0.98]"
