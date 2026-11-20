@@ -20,9 +20,18 @@ export function CatalogPage() {
     () =>
       catalogProducts
         .filter(
-          (p) =>
-            (category === 'Todos' || p.category === category) &&
-            p.name.toLowerCase().includes(query.toLowerCase())
+          (p) => {
+            const normalizedQuery = query.trim().toLowerCase();
+            const searchableText = [p.name, p.cleanName, p.category, p.pack, p.badge]
+              .filter(Boolean)
+              .join(' ')
+              .toLowerCase();
+
+            return (
+              (category === 'Todos' || p.category === category) &&
+              searchableText.includes(normalizedQuery)
+            );
+          }
         )
         .sort((a, b) =>
           sort === 'price-low'

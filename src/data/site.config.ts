@@ -1,3 +1,5 @@
+import { businessFacts } from './business-facts';
+
 /**
  * CONFIGURACIÓN PRINCIPAL DEL SITIO - IMPORTADORA HAOTE
  * 
@@ -5,28 +7,29 @@
  * están centralizados en este archivo para que sean 100% editables.
  */
 
+const whatsappNumber = businessFacts.whatsappUrl.value.replace('https://wa.me/', '');
+
 export const siteConfig = {
-  name: 'IMPORTADORA HAOTE',
-  legalName: 'Importadora Haote SRL',
-  slogan: 'Juguetes de moda al precio mayorista',
-  description: 'Importadora mayorista en Once, CABA. Más de 1.400 juguetes de moda, muñecos tipo Lego, peluches, Pop y artículos de temporada. Venta por bulto y pack con envíos a todo el país.',
+  name: businessFacts.brandName.value,
+  legalName: businessFacts.legalName.value,
+  slogan: businessFacts.slogan.value,
+  description: businessFacts.description.value,
   
   /**
    * ATENCIÓN: Reemplazar este número con el WhatsApp comercial real del cliente.
    * Formato internacional sin símbolos: Código país (54) + Código móvil (9) + Código de área (11) + Número local.
    * Ejemplo: '5491112345678'
    */
-  whatsappNumber: '5491100000000',
+  whatsappNumber,
 
   location: {
-    address: 'Av. Corrientes 2480 (Dirección Demo)',
-    neighborhood: 'Once / Balvanera',
-    city: 'Ciudad Autónoma de Buenos Aires',
-    country: 'Argentina',
-    postalCode: 'C1046AAP',
-    mapsUrl: 'https://maps.google.com/?q=Av.+Corrientes+2480,+Once,+CABA,+Argentina',
-    schedule: 'Lunes a Viernes de 9:00 a 18:00 hs · Sábados de 9:00 a 14:00 hs',
-    notes: 'Venta por bulto cerrado y pack mayorista. Retiro inmediato en local o despacho a expresos.',
+    address: businessFacts.address.value,
+    neighborhood: 'Once',
+    city: businessFacts.city.value,
+    country: businessFacts.country.value,
+    mapsUrl: businessFacts.googleMapsUrl.value,
+    schedule: `${businessFacts.schedule.weekdays} · ${businessFacts.schedule.saturday}`,
+    notes: `${businessFacts.wholesaleFormat.value}. ${businessFacts.salesChannel.value}.`,
   },
 
   trustMetrics: [
@@ -92,4 +95,3 @@ export function getWhatsAppLink(customMessage?: string): string {
   const message = customMessage || '¡Hola! Quiero consultar la lista de precios mayoristas de Importadora Haote.';
   return `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(message)}`;
 }
-

@@ -5,3 +5,4 @@ dist/
 *.log
 *.tsbuildinfo
 node_modules
+.manus/

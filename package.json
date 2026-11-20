@@ -5,7 +5,7 @@
   "description": "Landing page demo de alta conversión para Importadora Haote - Mayorista de juguetes de moda",
   "scripts": {
     "dev": "node node_modules/next/dist/bin/next dev",
-    "build": "npx tailwindcss -i app/globals.css -o app/tailwind.css && node node_modules/next/dist/bin/next build",
+    "build": "node node_modules/next/dist/bin/next build",
     "start": "node node_modules/next/dist/bin/next start",
     "lint": "node node_modules/next/dist/bin/next lint"
   },
