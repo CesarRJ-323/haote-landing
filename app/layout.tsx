@@ -5,7 +5,6 @@ import '@fontsource/nunito/400.css';
 import '@fontsource/nunito/600.css';
 import '@fontsource/nunito/700.css';
 import './globals.css';
-import './tailwind.css';
 import './motion.css';
 import './polish.css';
 import { SiteHeader } from '../src/components/site-header';

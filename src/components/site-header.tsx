@@ -168,7 +168,9 @@ export function SiteHeader() {
       {open && (
         <div
           id="mobile-navigation"
-          className="md:hidden fixed inset-x-0 top-[58px] z-30 bg-white/95 backdrop-blur-md border-b border-[var(--border-line)] p-6 shadow-xl"
+          className={`md:hidden fixed inset-x-0 z-30 bg-white/95 backdrop-blur-md border-b border-[var(--border-line)] p-6 shadow-xl ${
+            isScrolled ? 'top-[58px]' : 'top-[72px]'
+          }`}
         >
           <nav className="flex flex-col gap-4 text-base font-bold text-[var(--text-main)]">
             <Link
