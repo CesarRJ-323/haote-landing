@@ -328,162 +328,109 @@ export function BetaMarketplacePage() {
         )}
       </section>
 
-      {/* MODAL DETALLE DE PRODUCTO ESTILO MERCADO LIBRE */}
+      {/* MODAL DETALLE DE PRODUCTO — ESTILO HAOTE */}
       {selectedProduct && (
         <div
-          className="ml-modal-backdrop"
+          className="pd-backdrop"
           onClick={() => setSelectedProduct(null)}
           role="dialog"
           aria-modal="true"
         >
           <div
-            className="ml-modal-card"
+            className="pd-card"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               type="button"
-              className="ml-modal-close"
+              className="pd-close"
               onClick={() => setSelectedProduct(null)}
               aria-label="Cerrar detalle"
             >
               ✕
             </button>
 
-            <div className="ml-modal-body">
-              {/* Columna 1: Galería / Imagen Principal */}
-              <div className="ml-col-visual">
-                <div className="ml-image-container">
+            <div className="pd-body">
+              {/* Imagen */}
+              <div className="pd-visual">
+                <div className="pd-img-wrap">
                   {selectedProduct.badge && (
-                    <span className="ml-badge-flag">{selectedProduct.badge}</span>
+                    <span className="pd-badge">{selectedProduct.badge}</span>
                   )}
                   <Image
                     src={selectedProduct.image}
                     alt={selectedProduct.cleanName}
                     fill
-                    sizes="(max-width: 768px) 80vw, 420px"
-                    className="object-contain p-4"
+                    sizes="(max-width: 768px) 80vw, 400px"
+                    className="object-contain p-6"
                     priority
                   />
                 </div>
-                <div className="ml-gallery-caption">
-                  <span>📸 Foto real del producto en depósito Once</span>
-                </div>
+                <p className="pd-img-caption">📸 Foto real del depósito · Once, CABA</p>
               </div>
 
-              {/* Columna 2: Información Central del Producto */}
-              <div className="ml-col-info">
-                <div className="ml-store-header">
-                  <span className="ml-store-letter">H</span>
-                  <span>Visita la Tienda oficial de <strong>Haote Importadora</strong> ✓</span>
+              {/* Información central */}
+              <div className="pd-info">
+                <span className="pd-category-tag">{selectedProduct.category}</span>
+
+                <h2 className="pd-title">{selectedProduct.name || selectedProduct.cleanName}</h2>
+
+                <div className="pd-stars-row">
+                  <span className="pd-stars">★★★★★</span>
+                  <span className="pd-reviews">142 reseñas · +500 vendidos</span>
                 </div>
 
-                <div className="ml-meta-line">
-                  <span>Nuevo</span>
-                  <span className="ml-meta-sep">|</span>
-                  <span>+500 vendidos</span>
-                </div>
-
-                {selectedProduct.badge && (
-                  <div className="ml-badge-rank">
-                    <span className="ml-rank-tag">MÁS VENDIDO</span>
-                    <span className="ml-rank-cat">1º en {selectedProduct.category}</span>
-                  </div>
-                )}
-
-                <h2 className="ml-detail-title">{selectedProduct.name || selectedProduct.cleanName}</h2>
-
-                <div className="ml-rating-stars-row">
-                  <span className="ml-rating-number">4.8</span>
-                  <span className="ml-rating-stars">★★★★★</span>
-                  <span className="ml-rating-reviews">(142)</span>
-                </div>
-
-                {/* Precios y Descuento Mercado Libre */}
-                <div className="ml-price-container">
-                  <span className="ml-price-strikethrough">
+                <div className="pd-price-block">
+                  <span className="pd-price-old">
                     ${Math.round(selectedProduct.price * 1.3).toLocaleString('es-AR')}
                   </span>
-                  <div className="ml-price-main-row">
-                    <span className="ml-price-amount">{selectedProduct.formattedPrice}</span>
-                    <span className="ml-discount-percent">25% OFF</span>
+                  <div className="pd-price-row">
+                    <span className="pd-price">{selectedProduct.formattedPrice}</span>
+                    <span className="pd-off-pill">25% OFF</span>
                   </div>
-                  <p className="ml-unit-price-note">
-                    Precio unitario mayorista: <strong>{selectedProduct.unitPrice}</strong>
-                  </p>
-                  <p className="ml-pack-note">
-                    Formato cerrado: <strong>{selectedProduct.pack}</strong>
+                  <p className="pd-price-note">
+                    Precio unitario: <strong>{selectedProduct.unitPrice}</strong> · Pack cerrado: <strong>{selectedProduct.pack}</strong>
                   </p>
                 </div>
 
-                {/* Lo que tenés que saber de este producto */}
-                <div className="ml-specs-block">
-                  <h3 className="ml-specs-heading">Lo que tenés que saber de este producto</h3>
-                  <ul className="ml-specs-list">
-                    <li>
-                      <span className="ml-check">✓</span>
-                      <span>Presentación mayorista: <strong>{selectedProduct.pack}</strong> cerrado.</span>
-                    </li>
-                    <li>
-                      <span className="ml-check">✓</span>
-                      <span>Categoría: <strong>{selectedProduct.category}</strong>.</span>
-                    </li>
-                    <li>
-                      <span className="ml-check">✓</span>
-                      <span>Producto viral de <strong>alta rotación comercial</strong> y gran margen de reventa.</span>
-                    </li>
-                    <li>
-                      <span className="ml-check">✓</span>
-                      <span>Materiales resistentes de primera calidad con terminación cuidada.</span>
-                    </li>
-                    <li>
-                      <span className="ml-check">✓</span>
-                      <span>Listo para exhibición en mostrador, góndola o catálogo online.</span>
-                    </li>
-                    <li>
-                      <span className="ml-check">✓</span>
-                      <span>Despacho inmediato desde nuestro depósito en Pasteur 367, Once, CABA.</span>
-                    </li>
-                  </ul>
-                </div>
+                <ul className="pd-features">
+                  <li><span className="pd-feat-dot" />Mayorista · alta rotación y gran margen de reventa</li>
+                  <li><span className="pd-feat-dot" />Materiales de primera calidad, terminación cuidada</li>
+                  <li><span className="pd-feat-dot" />Listo para góndola, mostrador o catálogo online</li>
+                  <li><span className="pd-feat-dot" />Despacho inmediato · Pasteur 367, Once, CABA</li>
+                </ul>
               </div>
 
-              {/* Columna 3: Caja de Compra Lateral (Mercado Libre Style) */}
-              <div className="ml-col-buy">
-                {/* Envío */}
-                <div className="ml-delivery-row">
-                  <span className="ml-delivery-icon">🚚</span>
-                  <div>
-                    <p className="ml-delivery-headline">
-                      Llega en 24/48 hs <span className="ml-green-text">gratis</span>
-                    </p>
-                    <p className="ml-delivery-sub">Despachos a todo el país desde Once</p>
+              {/* Caja de acción */}
+              <div className="pd-action-box">
+                <div className="pd-info-rows">
+                  <div className="pd-info-row">
+                    <span>🚚</span>
+                    <div>
+                      <p className="pd-info-label">Envío a todo el país</p>
+                      <p className="pd-info-sub">Despacho en 24/48 hs desde Once</p>
+                    </div>
+                  </div>
+                  <div className="pd-info-row">
+                    <span>📍</span>
+                    <div>
+                      <p className="pd-info-label">Retiro gratis hoy</p>
+                      <p className="pd-info-sub">Pasteur 367, Once · Lun–Vie 9–18 hs</p>
+                    </div>
                   </div>
                 </div>
 
-                {/* Retiro */}
-                <div className="ml-delivery-row">
-                  <span className="ml-delivery-icon">📍</span>
-                  <div>
-                    <p className="ml-delivery-headline">
-                      Retirá <span className="ml-green-text">gratis</span> hoy mismo
-                    </p>
-                    <p className="ml-delivery-sub">En Pasteur 367, Once (Lun a Vie 9-18 hs)</p>
-                  </div>
+                <div className="pd-stock-row">
+                  <span className="pd-stock-dot" />
+                  <span>Stock disponible · {selectedProduct.pack}</span>
                 </div>
 
-                {/* Stock disponible */}
-                <div className="ml-stock-info">
-                  <strong>Stock disponible</strong>
-                  <span>Formato cerrado: {selectedProduct.pack}</span>
-                </div>
-
-                {/* Selector de Cantidad */}
-                <div className="ml-quantity-picker">
-                  <span>Cantidad:</span>
+                <div className="pd-qty-row">
+                  <label className="pd-qty-label" htmlFor="pd-qty-sel">Cantidad</label>
                   <select
+                    id="pd-qty-sel"
                     value={modalQty}
                     onChange={(e) => setModalQty(Number(e.target.value))}
-                    className="ml-quantity-select"
+                    className="pd-qty-select"
                   >
                     {[1, 2, 3, 4, 5, 10, 20].map((n) => (
                       <option key={n} value={n}>
@@ -491,57 +438,36 @@ export function BetaMarketplacePage() {
                       </option>
                     ))}
                   </select>
-                  <small className="ml-stock-hint">(+50 packs)</small>
                 </div>
 
-                {/* Botones de Acción Mercado Libre */}
-                <div className="ml-button-group">
-                  <button
-                    type="button"
-                    className="ml-btn-buy"
-                    onClick={() => {
-                      const total = (selectedProduct.price * modalQty).toLocaleString('es-AR');
-                      const text = `¡Hola! Quiero comprar ahora ${modalQty} pack(s) de ${selectedProduct.cleanName} ($${total}) que vi en el catálogo de Haote.`;
-                      window.open(`https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(text)}`, '_blank');
-                    }}
-                  >
-                    Comprar ahora
-                  </button>
+                <button
+                  type="button"
+                  className="pd-btn-cart"
+                  onClick={() => {
+                    handleAdd(selectedProduct, modalQty);
+                    setModalAdded(true);
+                    window.setTimeout(() => setModalAdded(false), 2000);
+                  }}
+                >
+                  {modalAdded ? '✓ ¡Agregado al carrito!' : '🛒 Agregar al carrito'}
+                </button>
 
-                  <button
-                    type="button"
-                    className="ml-btn-cart"
-                    onClick={() => {
-                      handleAdd(selectedProduct, modalQty);
-                      setModalAdded(true);
-                      window.setTimeout(() => setModalAdded(false), 2000);
-                    }}
-                  >
-                    {modalAdded ? '✓ ¡Agregado al carrito!' : 'Agregar al carrito'}
-                  </button>
-                </div>
-
-                {/* Vendedor oficial */}
-                <div className="ml-seller-block">
-                  <div className="ml-seller-identity">
-                    <span className="ml-seller-badge-circle">H</span>
-                    <div>
-                      <strong>Tienda oficial Haote</strong>
-                      <span>+10 mil ventas mayoristas</span>
-                    </div>
+                <div className="pd-seller">
+                  <span className="pd-seller-avatar">H</span>
+                  <div>
+                    <strong>Haote Importadora</strong>
+                    <span>+10 mil ventas · Factura A y B</span>
                   </div>
-                  <span className="ml-seller-invoice">Hace Factura A y B</span>
                 </div>
 
-                {/* Garantías de compra */}
-                <div className="ml-trust-items">
-                  <div className="ml-trust-item">
-                    <span className="ml-trust-icon">↩</span>
-                    <p><strong>Devolución directa.</strong> Garantía por fallas de fábrica.</p>
+                <div className="pd-guarantees">
+                  <div className="pd-guarantee">
+                    <span>↩</span>
+                    <span>Devolución por fallas de fábrica</span>
                   </div>
-                  <div className="ml-trust-item">
-                    <span className="ml-trust-icon">🛡</span>
-                    <p><strong>Compra Protegida.</strong> Recibí los packs con stock verificado en depósito.</p>
+                  <div className="pd-guarantee">
+                    <span>🛡</span>
+                    <span>Stock verificado en depósito</span>
                   </div>
                 </div>
               </div>
