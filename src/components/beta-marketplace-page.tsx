@@ -304,7 +304,22 @@ export function BetaMarketplacePage() {
 
       <section className="page-shell beta-trust-strip"><div><strong>Compra por pack</strong><span>Precios para reventa</span></div><div><strong>Stock real</strong><span>Consultá disponibilidad</span></div><div><strong>Despachos rápidos</strong><span>A todo el país</span></div><div><strong>Atención directa</strong><span>Por WhatsApp</span></div></section>
 
-      <section className="page-shell beta-deals"><div><span>PACKS PARA TU NEGOCIO</span><strong>Elegí surtido, reponé rápido.</strong><a href="#productos">Ver ofertas →</a></div><div><span>PRODUCTOS DE TEMPORADA</span><strong>Lo nuevo ya llegó a Once.</strong><a href="#productos">Explorar →</a></div></section>
+      <section className="page-shell beta-deals">
+        <div>
+          <span>PACKS PARA TU NEGOCIO</span>
+          <strong>Elegí surtido, reponé rápido.</strong>
+          <a href="#productos" className="beta-deal-btn beta-deal-btn-gold">
+            Ver ofertas <span className="beta-deal-arrow">→</span>
+          </a>
+        </div>
+        <div>
+          <span>PRODUCTOS DE TEMPORADA</span>
+          <strong>Lo nuevo ya llegó a Once.</strong>
+          <Link href="/catalogo" className="beta-deal-btn beta-deal-btn-white">
+            Explorar catálogo <span className="beta-deal-arrow">→</span>
+          </Link>
+        </div>
+      </section>
 
       <section id="productos" className="page-shell beta-products-section">
         <div className="beta-section-heading"><div><span className="eyebrow">Elegidos para vender</span><h2 className="font-heading">Productos de alta rotación</h2></div><span className="beta-results">{visibleProducts.length} productos</span></div>
