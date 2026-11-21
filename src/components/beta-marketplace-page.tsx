@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type TouchEvent } from 'react';
 import { catalogCategories, catalogProducts } from '../data/catalog';
 import type { CatalogProduct } from '../data/catalog';
+import { siteConfig } from '../data/site.config';
 
 function BetaProductCard({ product, added, onAdd }: { product: CatalogProduct; added: boolean; onAdd: () => void }) {
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
@@ -21,9 +22,30 @@ export function BetaMarketplacePage() {
   const promoTouchStart = useRef<number | null>(null);
   const promoChangeTimer = useRef<number | null>(null);
   const promoSlides = [
-    { eyebrow: 'PROMOCIÓN MAYORISTA', title: 'Hasta 25% OFF en packs seleccionados', detail: 'Ofertas especiales para reponer tu negocio', image: '/images/products/minecraft-construccion.jpeg', accent: 'var(--accent-sun)', cta: 'Ver promociones' },
-    { eyebrow: 'DESCUENTOS EN PERSONAJES', title: 'Precios especiales por volumen', detail: 'Promos en figuras y coleccionables', image: '/images/products/figuras-futbol-pop.jpeg', accent: 'var(--accent-coral-brand)', cta: 'Ver descuentos' },
-    { eyebrow: 'OFERTAS DE TEMPORADA', title: 'Promos desde $6.500', detail: 'Elegí novedades con precio mayorista', image: '/images/products/peluches-stitch.jpeg', accent: 'var(--accent-blue)', cta: 'Ver ofertas' },
+    {
+      eyebrow: 'PROMOCIÓN MAYORISTA',
+      title: 'Hasta 25% OFF en packs seleccionados',
+      detail: 'Ofertas especiales para reponer tu negocio',
+      image: '/images/products/minecraft-construccion.jpeg',
+      accent: '#F6C744',
+      cta: 'Ver promociones',
+    },
+    {
+      eyebrow: 'DESCUENTOS EN PERSONAJES',
+      title: 'Precios especiales por volumen',
+      detail: 'Promos en figuras y coleccionables',
+      image: '/images/products/figuras-futbol-pop.jpeg',
+      accent: '#FF7B60',
+      cta: 'Ver descuentos',
+    },
+    {
+      eyebrow: 'OFERTAS DE TEMPORADA',
+      title: 'Promos desde $6.500',
+      detail: 'Elegí novedades con precio mayorista',
+      image: '/images/products/peluches-stitch.jpeg',
+      accent: '#5AA9FF',
+      cta: 'Ver ofertas',
+    },
   ];
 
   const realPhotoProducts = catalogProducts.filter((product) => product.image.endsWith('.jpeg'));
@@ -120,8 +142,46 @@ export function BetaMarketplacePage() {
 
       <section className={`beta-promo-wrap${promoChanging ? ' is-changing' : ''}`} onTouchStart={handlePromoTouchStart} onTouchEnd={handlePromoTouchEnd} style={{ '--promo-accent': promoSlides[promoSlide].accent } as CSSProperties}>
         <button type="button" className="beta-promo-arrow beta-promo-arrow-left" onClick={() => changePromo((promoSlide - 1 + promoSlides.length) % promoSlides.length)} aria-label="Descuento anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7" /></svg></button>
-        <div key={`copy-${promoSlide}`} className="beta-promo-copy beta-promo-slide-in"><span className="eyebrow-dark">{promoSlides[promoSlide].eyebrow}</span><h1 className="font-heading">{promoSlides[promoSlide].title}</h1><p>{promoSlides[promoSlide].detail}</p><div className="beta-discount-chips"><strong>Precio mayorista</strong><span>Consultar stock</span></div><div className="beta-promo-actions"><Link href="#productos" className="button button-primary h-12">{promoSlides[promoSlide].cta}</Link></div></div>
-        <div key={`art-${promoSlide}`} className="beta-promo-art beta-promo-slide-in"><div className="beta-art-orbit beta-art-orbit-one" /><div className="beta-art-orbit beta-art-orbit-two" /><Image src={promoSlides[promoSlide].image} alt="Producto destacado Haote" fill sizes="(max-width: 760px) 70vw, 480px" className="object-contain p-10 beta-promo-product" /><div className="beta-promo-dots">{promoSlides.map((slide, index) => <button type="button" key={slide.title} className={index === promoSlide ? 'is-active' : ''} onClick={() => changePromo(index)} aria-label={`Ver descuento ${index + 1}`} />)}</div></div>
+        <div key={`copy-${promoSlide}`} className="beta-promo-copy beta-promo-slide-in">
+          <span className="beta-promo-badge">{promoSlides[promoSlide].eyebrow}</span>
+          <h1 className="font-heading">{promoSlides[promoSlide].title}</h1>
+          <p>{promoSlides[promoSlide].detail}</p>
+          <div className="beta-promo-actions">
+            <Link href="#productos" className="beta-btn-primary">
+              {promoSlides[promoSlide].cta}
+            </Link>
+            <a
+              href={`https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(`¡Hola! Quiero consultar stock de ${promoSlides[promoSlide].title} en Haote.`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="beta-btn-secondary"
+            >
+              Consultar stock
+            </a>
+          </div>
+        </div>
+        <div key={`art-${promoSlide}`} className="beta-promo-art beta-promo-slide-in">
+          <div className="beta-promo-visual-frame">
+            <Image
+              src={promoSlides[promoSlide].image}
+              alt="Producto destacado Haote"
+              fill
+              sizes="(max-width: 760px) 70vw, 480px"
+              className="object-cover beta-promo-product"
+            />
+          </div>
+          <div className="beta-promo-dots">
+            {promoSlides.map((slide, index) => (
+              <button
+                type="button"
+                key={slide.title}
+                className={index === promoSlide ? 'is-active' : ''}
+                onClick={() => changePromo(index)}
+                aria-label={`Ver descuento ${index + 1}`}
+              />
+            ))}
+          </div>
+        </div>
         <button type="button" className="beta-promo-arrow beta-promo-arrow-right" onClick={() => changePromo((promoSlide + 1) % promoSlides.length)} aria-label="Siguiente descuento"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg></button>
       </section>
 
