@@ -15,15 +15,18 @@ export function BetaMarketplacePage() {
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('Todos');
   const [added, setAdded] = useState<string | null>(null);
+  const [cartQuantity, setCartQuantity] = useState(0);
   const [promoSlide, setPromoSlide] = useState(0);
   const [promoChanging, setPromoChanging] = useState(false);
   const promoTouchStart = useRef<number | null>(null);
   const promoChangeTimer = useRef<number | null>(null);
   const promoSlides = [
-    { eyebrow: 'PACKS DE ALTA ROTACIÓN', title: 'Hasta 25% OFF', detail: 'en juguetes que todos quieren', image: '/images/products/lego-spiderman-x8.svg', accent: 'var(--accent-sun)', cta: 'Ver packs' },
-    { eyebrow: 'PERSONAJES Y POP', title: 'Precios especiales', detail: 'para reponer tu negocio', image: '/images/products/pop-stitch.svg', accent: 'var(--accent-coral-brand)', cta: 'Comprar personajes' },
-    { eyebrow: 'TEMPORADA ACTIVA', title: 'Novedades desde $6.500', detail: 'stock listo para vender', image: '/images/products/mochila-agua-verano.svg', accent: 'var(--accent-blue)', cta: 'Ver novedades' },
+    { eyebrow: 'PROMOCIÓN MAYORISTA', title: 'Hasta 25% OFF en packs seleccionados', detail: 'Ofertas especiales para reponer tu negocio', image: '/images/products/minecraft-construccion.jpeg', accent: 'var(--accent-sun)', cta: 'Ver promociones' },
+    { eyebrow: 'DESCUENTOS EN PERSONAJES', title: 'Precios especiales por volumen', detail: 'Promos en figuras y coleccionables', image: '/images/products/figuras-futbol-pop.jpeg', accent: 'var(--accent-coral-brand)', cta: 'Ver descuentos' },
+    { eyebrow: 'OFERTAS DE TEMPORADA', title: 'Promos desde $6.500', detail: 'Elegí novedades con precio mayorista', image: '/images/products/peluches-stitch.jpeg', accent: 'var(--accent-blue)', cta: 'Ver ofertas' },
   ];
+
+  const realPhotoProducts = catalogProducts.filter((product) => product.image.endsWith('.jpeg'));
 
   useEffect(() => {
     document.body.classList.add('beta-mode');
@@ -31,17 +34,39 @@ export function BetaMarketplacePage() {
   }, []);
 
   useEffect(() => {
+    try {
+      const saved = window.localStorage.getItem('haote-cart');
+      const items = saved ? JSON.parse(saved) as Array<{ quantity?: number }> : [];
+      setCartQuantity(items.reduce((total, item) => total + (item.quantity || 0), 0));
+    } catch {
+      setCartQuantity(0);
+    }
+  }, []);
+
+  useEffect(() => {
     const timer = window.setInterval(() => changePromo((promoSlide + 1) % promoSlides.length), 6500);
     return () => window.clearInterval(timer);
   }, [promoSlide, promoSlides.length]);
 
-  const visibleProducts = useMemo(() => catalogProducts.filter((product) => {
+  const visibleProducts = useMemo(() => realPhotoProducts.filter((product) => {
     const text = `${product.name} ${product.cleanName} ${product.category} ${product.pack}`.toLowerCase();
     return (category === 'Todos' || product.category === category) && text.includes(query.trim().toLowerCase());
   }), [category, query]);
 
   const handleAdd = (product: (typeof catalogProducts)[number]) => {
-    window.dispatchEvent(new CustomEvent('haote:add-to-cart', { detail: product }));
+    try {
+      const saved = window.localStorage.getItem('haote-cart');
+      const items = saved ? JSON.parse(saved) as Array<(typeof catalogProducts)[number] & { quantity: number }> : [];
+      const existing = items.find((item) => item.id === product.id);
+      const nextItems = existing
+        ? items.map((item) => item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item)
+        : [...items, { ...product, quantity: 1 }];
+      window.localStorage.setItem('haote-cart', JSON.stringify(nextItems));
+      setCartQuantity(nextItems.reduce((total, item) => total + item.quantity, 0));
+      window.dispatchEvent(new StorageEvent('storage', { key: 'haote-cart', newValue: JSON.stringify(nextItems) }));
+    } catch {
+      window.dispatchEvent(new CustomEvent('haote:add-to-cart', { detail: product }));
+    }
     setAdded(product.id);
     window.setTimeout(() => setAdded(null), 1400);
   };
@@ -83,7 +108,7 @@ export function BetaMarketplacePage() {
         <div className="page-shell beta-marketplace-nav-inner">
           <Link href="/" className="beta-marketplace-brand"><span>H</span><strong>HAOTE</strong><small>IMPORTADORA</small></Link>
           <label className="beta-search"><span aria-hidden="true">⌕</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Buscar juguetes, personajes o categorías" aria-label="Buscar productos" /></label>
-          <div className="beta-nav-actions"><Link href="/login" aria-label="Ir a mi cuenta"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5" /><path d="M5 20c.8-3.2 3.1-5 7-5s6.2 1.8 7 5" /></svg><span>Mi cuenta</span></Link><Link href="/carrito" aria-label="Ir al carrito"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h2l2 12h10l2-8H7M10 21h.01M18 21h.01" /></svg><span>Pedido</span></Link></div>
+          <div className="beta-nav-actions"><Link href="/login" aria-label="Ir a mi cuenta"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5" /><path d="M5 20c.8-3.2 3.1-5 7-5s6.2 1.8 7 5" /></svg><span>Mi cuenta</span></Link><Link href="/carrito" className="beta-cart-link" aria-label={`Ir al carrito${cartQuantity ? `, ${cartQuantity} productos` : ''}`}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h2l2 12h10l2-8H7M10 21h.01M18 21h.01" /></svg><span>Pedido</span>{cartQuantity > 0 && <b className="beta-cart-count">{cartQuantity}</b>}</Link></div>
         </div>
       </section>
 
@@ -101,7 +126,7 @@ export function BetaMarketplacePage() {
       </section>
 
       <section className="page-shell beta-recommendations" aria-label="Productos destacados">
-        {catalogProducts.slice(0, 6).map((product) => <article className="beta-recommendation-card" key={product.id}><div className="beta-recommendation-image"><Image src={product.image} alt="" fill sizes="(max-width: 700px) 154px, 220px" className="object-cover p-0" /></div><small>{product.category}</small><strong>{product.cleanName}</strong><span>{product.formattedPrice}</span><button type="button" onClick={() => handleAdd(product)}>{added === product.id ? 'Agregado' : 'Agregar'}</button></article>)}
+        {realPhotoProducts.slice(0, 6).map((product) => <article className="beta-recommendation-card" key={product.id}><div className="beta-recommendation-image"><Image src={product.image} alt="" fill sizes="(max-width: 700px) 154px, 220px" className="object-cover p-0" /></div><small>{product.category}</small><strong>{product.cleanName}</strong><span>{product.formattedPrice}</span><button type="button" onClick={() => handleAdd(product)}>{added === product.id ? 'Agregado' : 'Agregar'}</button></article>)}
       </section>
 
       <section className="page-shell beta-trust-strip"><div><strong>Compra por pack</strong><span>Precios para reventa</span></div><div><strong>Stock real</strong><span>Consultá disponibilidad</span></div><div><strong>Despachos rápidos</strong><span>A todo el país</span></div><div><strong>Atención directa</strong><span>Por WhatsApp</span></div></section>

@@ -11,6 +11,7 @@ const MINIMUM_PACKS = 3;
 
 export function CartPage() {
   const [items, setItems] = useState<CartLine[]>([]);
+  const [cartHydrated, setCartHydrated] = useState(false);
   const [businessName, setBusinessName] = useState('');
   const [city, setCity] = useState('');
   const [notes, setNotes] = useState('');
@@ -22,15 +23,17 @@ export function CartPage() {
       setBusinessName(window.localStorage.getItem('haote-cart-business') || '');
       setCity(window.localStorage.getItem('haote-cart-city') || '');
       setNotes(window.localStorage.getItem('haote-cart-notes') || '');
-    } catch { /* El estado inicial vacío sigue siendo válido. */ }
+      setCartHydrated(true);
+    } catch { setCartHydrated(true); }
   }, []);
 
   useEffect(() => {
+    if (!cartHydrated) return;
     window.localStorage.setItem('haote-cart', JSON.stringify(items));
     window.localStorage.setItem('haote-cart-business', businessName);
     window.localStorage.setItem('haote-cart-city', city);
     window.localStorage.setItem('haote-cart-notes', notes);
-  }, [businessName, city, items, notes]);
+  }, [businessName, cartHydrated, city, items, notes]);
 
   const quantity = items.reduce((total, item) => total + item.quantity, 0);
   const subtotal = items.reduce((total, item) => total + item.price * item.quantity, 0);

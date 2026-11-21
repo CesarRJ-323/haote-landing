@@ -19,6 +19,7 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState<CartLine[]>([]);
+  const [cartHydrated, setCartHydrated] = useState(false);
   const [businessName, setBusinessName] = useState('');
   const [city, setCity] = useState('');
   const [notes, setNotes] = useState('');
@@ -49,12 +50,15 @@ export function SiteHeader() {
       setBusinessName(window.localStorage.getItem('haote-cart-business') || '');
       setCity(window.localStorage.getItem('haote-cart-city') || '');
       setNotes(window.localStorage.getItem('haote-cart-notes') || '');
+      setCartHydrated(true);
     } catch {
       // El carrito sigue funcionando aunque el almacenamiento no esté disponible.
+      setCartHydrated(true);
     }
   }, []);
 
   useEffect(() => {
+    if (!cartHydrated) return;
     try {
       window.localStorage.setItem('haote-cart', JSON.stringify(cartItems));
       window.localStorage.setItem('haote-cart-business', businessName);
@@ -63,7 +67,7 @@ export function SiteHeader() {
     } catch {
       // El carrito sigue funcionando aunque el almacenamiento no esté disponible.
     }
-  }, [businessName, cartItems, city, notes]);
+  }, [businessName, cartHydrated, cartItems, city, notes]);
 
   useEffect(() => {
     const handleAdd = (event: Event) => {
