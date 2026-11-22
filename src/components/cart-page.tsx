@@ -114,25 +114,25 @@ export function CartPage() {
   return (
     <main className="cart-page">
       <div className="page-shell">
-        {/* Encabezado con navegación de contexto */}
+        {/* Encabezado limpio con textos grandes y cortos */}
         <div className="cart-page-heading">
           <div>
             <div className="cart-badge-kicker">
-              <span>DEPOSITO ONCE · PASTEUR 367</span>
+              <span>MAYORISTA ONCE</span>
               <span className="cart-kicker-dot" />
-              <span>VENTA POR BULTO</span>
+              <span>PASTEUR 367</span>
             </div>
             <h1 className="font-heading">
-              Tu Pedido Mayorista{quantity > 0 ? ` (${quantity} ${quantity === 1 ? 'pack' : 'packs'})` : ''}
+              Tu Pedido Mayorista{quantity > 0 ? ` (${quantity})` : ''}
             </h1>
-            <p>Revisá tus packs, completá los datos de tu comercio y coordiná el retiro o despacho por WhatsApp.</p>
+            <p>Revisá tus packs y pedí directo por WhatsApp.</p>
           </div>
           <div className="cart-heading-actions">
             <Link href="/catalogo" className="cart-nav-back">
-              ← Ver catálogo completo
+              ← Catálogo
             </Link>
             <Link href="/beta" className="cart-nav-beta">
-              Mercado Mayorista (/beta) →
+              Ofertas /beta →
             </Link>
           </div>
         </div>
@@ -143,13 +143,13 @@ export function CartPage() {
             <section className="cart-page-card" aria-labelledby="cart-items-title">
               <div className="cart-card-header">
                 <div>
-                  <h2 id="cart-items-title">Packs en tu pedido</h2>
+                  <h2 id="cart-items-title">Packs elegidos</h2>
                   <span className="cart-count-badge">
                     {quantity} {quantity === 1 ? 'pack' : 'packs'}
                   </span>
                 </div>
                 <button type="button" className="cart-clear-link" onClick={clearCart}>
-                  🗑 Vaciar carrito
+                  Vaciar pedido
                 </button>
               </div>
 
@@ -175,9 +175,9 @@ export function CartPage() {
                         </div>
                         <strong className="cart-item-title">{item.cleanName || item.name}</strong>
                         <div className="cart-item-meta">
-                          <span>Formato: <strong>{item.pack}</strong></span>
+                          <span>{item.pack}</span>
                           <span className="cart-item-sep">·</span>
-                          <span>Unitario: <strong>{item.unitPrice}</strong></span>
+                          <span>{item.unitPrice} u.</span>
                         </div>
                       </div>
 
@@ -237,7 +237,7 @@ export function CartPage() {
               <div className="cart-wholesale-note">
                 <span className="cart-note-icon">📦</span>
                 <p>
-                  <strong>Embalaje mayorista original:</strong> Todos los productos se preparan en bultos cerrados de fábrica para proteger su valor comercial y facilitar la reventa en tu local.
+                  <strong>Bultos cerrados de fábrica:</strong> Mercadería original lista para góndola y reventa.
                 </p>
               </div>
             </section>
@@ -245,7 +245,7 @@ export function CartPage() {
             {/* Columna Derecha: Resumen de Pedido y Confirmación */}
             <aside className="cart-page-summary">
               <div className="cart-summary-header">
-                <h2>Resumen del pedido</h2>
+                <h2>Resumen</h2>
                 <span className="cart-summary-badge">Mayorista</span>
               </div>
 
@@ -254,11 +254,11 @@ export function CartPage() {
                 <div className="cart-progress-header">
                   {missingPacks > 0 ? (
                     <span className="cart-progress-alert">
-                      ⚠️ Te faltan <strong>{missingPacks} {missingPacks === 1 ? 'pack' : 'packs'}</strong> para el mínimo (3 packs)
+                      ⚠️ Faltan <strong>{missingPacks} {missingPacks === 1 ? 'pack' : 'packs'}</strong> (mínimo: 3)
                     </span>
                   ) : (
                     <span className="cart-progress-success">
-                      ✓ ¡Pedido mínimo alcanzado!
+                      ✓ ¡Mínimo alcanzado!
                     </span>
                   )}
                   <span className="cart-progress-pct">
@@ -276,18 +276,15 @@ export function CartPage() {
               {/* Totales */}
               <div className="cart-breakdown">
                 <div className="cart-breakdown-row">
-                  <span>Cantidad total</span>
-                  <strong>{quantity} {quantity === 1 ? 'pack' : 'packs'}</strong>
+                  <span>Packs</span>
+                  <strong>{quantity}</strong>
                 </div>
                 <div className="cart-breakdown-row">
                   <span>Entrega</span>
-                  <span className="cart-delivery-hint">Retiro Once / Expreso</span>
+                  <span className="cart-delivery-hint">Once o Expreso</span>
                 </div>
                 <div className="cart-breakdown-total">
-                  <div>
-                    <span>Total estimado</span>
-                    <small>Precios en depósito Pasteur</small>
-                  </div>
+                  <span>Total</span>
                   <strong>
                     {new Intl.NumberFormat('es-AR', {
                       style: 'currency',
@@ -298,48 +295,48 @@ export function CartPage() {
                 </div>
               </div>
 
-              {/* Formulario de contacto para el pedido */}
+              {/* Formulario rápido */}
               <div className="cart-form-section">
-                <h3 className="cart-form-title">Datos de tu negocio</h3>
+                <h3 className="cart-form-title">Tus datos</h3>
                 <div className="cart-form-fields">
                   <div className="cart-field">
                     <label htmlFor="cart-biz">
-                      <span>🏪 Nombre del negocio / Contacto</span>
+                      <span>🏪 Negocio o contacto</span>
                     </label>
                     <input
                       id="cart-biz"
                       value={businessName}
                       onChange={(e) => setBusinessName(e.target.value)}
-                      placeholder="Ej: Juguetería Sol / Kiosco Once"
+                      placeholder="Tu nombre o comercio"
                     />
                   </div>
                   <div className="cart-field">
                     <label htmlFor="cart-city">
-                      <span>📍 Ciudad / Localidad de entrega</span>
+                      <span>📍 Ciudad o barrio</span>
                     </label>
                     <input
                       id="cart-city"
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
-                      placeholder="Ej: Once, CABA / Rosario, Santa Fe"
+                      placeholder="Ej: Once, CABA"
                     />
                   </div>
                   <div className="cart-field">
                     <label htmlFor="cart-notes">
-                      <span>📝 Notas o transporte preferido (opcional)</span>
+                      <span>📝 Notas (opcional)</span>
                     </label>
                     <textarea
                       id="cart-notes"
                       value={notes}
                       onChange={(e) => setNotes(e.target.value)}
-                      placeholder="Ej: Retiramos hoy por Pasteur / Enviar por Expreso..."
+                      placeholder="Ej: Pasamos hoy / Despachar por expreso"
                       rows={2}
                     />
                   </div>
                 </div>
               </div>
 
-              {/* Botón WhatsApp */}
+              {/* Botón WhatsApp grande y claro */}
               <button
                 type="button"
                 disabled={!items.length}
@@ -351,33 +348,24 @@ export function CartPage() {
                   <path d="M9 9.5c.4 1.2 1.3 2.2 2.5 2.8.5.2 1 .4 1.4-.1l.5-.7c.2-.3.5-.3.8-.1l1.5.7c.3.2.4.5.2.8-.4.8-1.2 1.1-2 1-2.4-.4-4.8-2.4-5.5-4.7-.2-.8.1-1.6.8-2 .2-.1.5 0 .6.2l.7 1.4c.1.3.1.5-.1.7l-.4.5Z" />
                 </svg>
                 <div>
-                  <span className="cart-wa-text">Confirmar pedido por WhatsApp</span>
-                  <small className="cart-wa-sub">Reserva y verificación inmediata de stock en Once</small>
+                  <span className="cart-wa-text">Pedir por WhatsApp</span>
+                  <small className="cart-wa-sub">Confirmación directa de stock</small>
                 </div>
               </button>
 
-              {/* Beneficios mayoristas */}
+              {/* Badges de confianza cortos */}
               <div className="cart-trust-badges">
                 <div className="cart-trust-badge">
                   <span>🚚</span>
-                  <div>
-                    <strong>Envíos a todo el país</strong>
-                    <small>Despacho en 24/48 hs por expreso o transporte</small>
-                  </div>
+                  <strong>Envíos a todo el país</strong>
                 </div>
                 <div className="cart-trust-badge">
                   <span>📍</span>
-                  <div>
-                    <strong>Retiro en depósito Once</strong>
-                    <small>Pasteur 367, Once, CABA (Lun a Vie 9 a 18 hs)</small>
-                  </div>
+                  <strong>Retiro en Pasteur 367, Once</strong>
                 </div>
                 <div className="cart-trust-badge">
                   <span>🧾</span>
-                  <div>
-                    <strong>Facturación oficial</strong>
-                    <small>Emitimos Factura A y B</small>
-                  </div>
+                  <strong>Factura A y B</strong>
                 </div>
               </div>
             </aside>
@@ -392,24 +380,22 @@ export function CartPage() {
                 <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
               </svg>
             </div>
-            <h2>Tu carrito mayorista está vacío</h2>
-            <p>
-              Todavía no agregaste ningún pack a tu pedido. Descubrí nuestras novedades virales, juguetes coleccionables y ofertas para abastecer tu local o negocio.
-            </p>
+            <h2>Tu carrito está vacío</h2>
+            <p>Elegí tus productos y armá tu pedido mayorista.</p>
             <div className="cart-empty-actions">
               <Link href="/catalogo" className="cart-btn-primary">
-                Explorar catálogo completo →
+                Ver catálogo →
               </Link>
               <Link href="/beta" className="cart-btn-secondary">
-                Ver Mercado Mayorista /beta →
+                Ver ofertas /beta →
               </Link>
             </div>
 
             {/* Packs recomendados para empezar */}
             <div className="cart-recommended-section">
               <div className="cart-recommended-heading">
-                <span className="eyebrow">Packs más solicitados</span>
-                <h3>🔥 Juguetes de alta rotación para comenzar tu pedido:</h3>
+                <span className="eyebrow">DESTACADOS</span>
+                <h3>🔥 Más vendidos para reventa:</h3>
               </div>
               <div className="cart-recommended-grid">
                 {catalogProducts.slice(0, 4).map((prod) => (
@@ -434,7 +420,7 @@ export function CartPage() {
                           className="cart-rec-add-btn"
                           onClick={() => addRecommended(prod)}
                         >
-                          + Agregar pack
+                          + Agregar
                         </button>
                       </div>
                     </div>
