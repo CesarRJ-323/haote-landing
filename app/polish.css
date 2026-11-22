@@ -1394,11 +1394,11 @@ body.beta-mode .beta-footer { display: block !important; }
 .beta-cart-count { position: absolute; top: -5px; right: -8px; display: grid; min-width: 18px; height: 18px; place-items: center; padding: 0 4px; border-radius: 999px; background: var(--accent-coral-action); color: var(--bg-surface); font-size: .62rem; line-height: 1; }
 .beta-category-nav {
   border-bottom: 0;
-  background: #1c2b3d;
+  background: var(--accent-sun);
   position: sticky;
   top: 0;
   z-index: 90;
-  box-shadow: 0 2px 14px rgba(0,0,0,.22);
+  box-shadow: 0 2px 10px rgba(0,0,0,.12);
 }
 .beta-category-inner {
   display: flex;
@@ -1413,7 +1413,7 @@ body.beta-mode .beta-footer { display: block !important; }
   flex: 0 0 auto;
   padding: 7px 16px;
   border-radius: 999px;
-  color: rgba(255,255,255,.65);
+  color: #1c2b3d;
   font-size: .78rem;
   font-weight: 700;
   letter-spacing: .01em;
@@ -1422,12 +1422,12 @@ body.beta-mode .beta-footer { display: block !important; }
   transition: background-color 180ms var(--ease), color 180ms var(--ease);
 }
 .beta-category-inner a:hover {
-  color: #fff;
-  background: rgba(255,255,255,.12);
+  background: rgba(0,0,0,.1);
+  color: #1c2b3d;
 }
 .beta-category-inner a.is-active {
-  background: var(--accent-sun);
-  color: #1c2b3d;
+  background: #1c2b3d;
+  color: var(--accent-sun);
   font-weight: 800;
 }
 .catalog-category-scroll { scrollbar-width: none; -ms-overflow-style: none; }
