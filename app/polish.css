@@ -2540,3 +2540,56 @@ body.beta-mode .ml-rank-tag {
     max-height: 280px;
   }
 }
+
+/* ========================================================
+   SCROLL REVEAL ANIMATIONS (/beta)
+   ======================================================== */
+.reveal-on-scroll:not(.reveal-stagger-parent) {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 650ms cubic-bezier(0.16, 1, 0.3, 1), transform 650ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll:not(.reveal-stagger-parent).is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger parent and children */
+.reveal-stagger-parent .reveal-child {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1), transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-stagger-parent.is-revealed .reveal-child {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Delay staggered children */
+.reveal-stagger-parent.is-revealed .reveal-child:nth-child(1) { transition-delay: 40ms; }
+.reveal-stagger-parent.is-revealed .reveal-child:nth-child(2) { transition-delay: 90ms; }
+.reveal-stagger-parent.is-revealed .reveal-child:nth-child(3) { transition-delay: 140ms; }
+.reveal-stagger-parent.is-revealed .reveal-child:nth-child(4) { transition-delay: 190ms; }
+.reveal-stagger-parent.is-revealed .reveal-child:nth-child(5) { transition-delay: 240ms; }
+.reveal-stagger-parent.is-revealed .reveal-child:nth-child(6) { transition-delay: 290ms; }
+.reveal-stagger-parent.is-revealed .reveal-child:nth-child(7) { transition-delay: 340ms; }
+.reveal-stagger-parent.is-revealed .reveal-child:nth-child(8) { transition-delay: 390ms; }
+.reveal-stagger-parent.is-revealed .reveal-child:nth-child(9) { transition-delay: 440ms; }
+.reveal-stagger-parent.is-revealed .reveal-child:nth-child(10) { transition-delay: 490ms; }
+.reveal-stagger-parent.is-revealed .reveal-child:nth-child(11) { transition-delay: 540ms; }
+.reveal-stagger-parent.is-revealed .reveal-child:nth-child(12) { transition-delay: 590ms; }
+
+/* Accessible motion reduction */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on-scroll,
+  .reveal-stagger-parent .reveal-child {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+

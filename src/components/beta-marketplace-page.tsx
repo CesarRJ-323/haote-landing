@@ -22,7 +22,7 @@ function BetaProductCard({
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   return (
     <article
-      className="beta-product-card"
+      className="beta-product-card reveal-child"
       onClick={onSelect}
       role="button"
       tabIndex={0}
@@ -41,8 +41,10 @@ function BetaProductCard({
       }}
       onPointerLeave={() => setTilt({ x: 0, y: 0 })}
       style={{
-        transform: `perspective(900px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
         cursor: 'pointer',
+        ...(tilt.x !== 0 || tilt.y !== 0
+          ? { transform: `perspective(900px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)` }
+          : {}),
       }}
     >
       <div className="beta-product-image">
@@ -202,6 +204,40 @@ export function BetaMarketplacePage() {
     changePromo(distance < 0 ? (promoSlide + 1) % promoSlides.length : (promoSlide - 1 + promoSlides.length) % promoSlides.length);
   };
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('.reveal-on-scroll, .reveal-child').forEach((el) => {
+        el.classList.add('is-revealed');
+      });
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: '0px 0px -40px 0px',
+        threshold: 0.08,
+      }
+    );
+
+    const elements = document.querySelectorAll('.reveal-on-scroll');
+    elements.forEach((el) => observer.observe(el));
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [visibleProducts.length]);
+
   return (
     <main className="beta-marketplace">
       <div className="beta-marketplace-bar">
@@ -272,10 +308,10 @@ export function BetaMarketplacePage() {
         </div>
       </section>
 
-      <section className="page-shell beta-recommendations" aria-label="Productos destacados">
+      <section className="page-shell beta-recommendations reveal-on-scroll reveal-stagger-parent" aria-label="Productos destacados">
         {realPhotoProducts.slice(0, 6).map((product) => (
           <article
-            className="beta-recommendation-card"
+            className="beta-recommendation-card reveal-child"
             key={product.id}
             onClick={() => {
               setSelectedProduct(product);
@@ -304,17 +340,22 @@ export function BetaMarketplacePage() {
         ))}
       </section>
 
-      <section className="page-shell beta-trust-strip"><div><strong>Compra por pack</strong><span>Precios para reventa</span></div><div><strong>Stock real</strong><span>Consultá disponibilidad</span></div><div><strong>Despachos rápidos</strong><span>A todo el país</span></div><div><strong>Atención directa</strong><span>Por WhatsApp</span></div></section>
+      <section className="page-shell beta-trust-strip reveal-on-scroll reveal-stagger-parent">
+        <div className="reveal-child"><strong>Compra por pack</strong><span>Precios para reventa</span></div>
+        <div className="reveal-child"><strong>Stock real</strong><span>Consultá disponibilidad</span></div>
+        <div className="reveal-child"><strong>Despachos rápidos</strong><span>A todo el país</span></div>
+        <div className="reveal-child"><strong>Atención directa</strong><span>Por WhatsApp</span></div>
+      </section>
 
-      <section className="page-shell beta-deals">
-        <div>
+      <section className="page-shell beta-deals reveal-on-scroll reveal-stagger-parent">
+        <div className="reveal-child">
           <span>PACKS PARA TU NEGOCIO</span>
           <strong>Elegí surtido, reponé rápido.</strong>
           <a href="#productos" className="beta-deal-btn beta-deal-btn-gold">
             Ver ofertas <span className="beta-deal-arrow">→</span>
           </a>
         </div>
-        <div>
+        <div className="reveal-child">
           <span>PRODUCTOS DE TEMPORADA</span>
           <strong>Lo nuevo ya llegó a Once.</strong>
           <Link href="/catalogo" className="beta-deal-btn beta-deal-btn-white">
@@ -324,9 +365,9 @@ export function BetaMarketplacePage() {
       </section>
 
       <section id="productos" className="page-shell beta-products-section">
-        <div className="beta-section-heading"><div><span className="eyebrow">Elegidos para vender</span><h2 className="font-heading">Productos de alta rotación</h2></div><span className="beta-results">{visibleProducts.length} productos</span></div>
+        <div className="beta-section-heading reveal-on-scroll"><div><span className="eyebrow">Elegidos para vender</span><h2 className="font-heading">Productos de alta rotación</h2></div><span className="beta-results">{visibleProducts.length} productos</span></div>
         {visibleProducts.length ? (
-          <div className="beta-product-grid">
+          <div className="beta-product-grid reveal-on-scroll reveal-stagger-parent">
             {visibleProducts.map((product) => (
               <BetaProductCard
                 key={product.id}
@@ -534,30 +575,30 @@ export function BetaMarketplacePage() {
       )}
 
       <footer className="beta-footer">
-        <div className="beta-footer-features">
+        <div className="beta-footer-features reveal-on-scroll reveal-stagger-parent">
           <div className="page-shell beta-footer-features-inner">
-            <div className="beta-footer-feature-item">
+            <div className="beta-footer-feature-item reveal-child">
               <span className="feature-icon" aria-hidden="true">📦</span>
               <div>
                 <strong>Venta Mayorista</strong>
                 <span>Packs cerrados y precios para reventa</span>
               </div>
             </div>
-            <div className="beta-footer-feature-item">
+            <div className="beta-footer-feature-item reveal-child">
               <span className="feature-icon" aria-hidden="true">🚚</span>
               <div>
                 <strong>Envíos a Todo el País</strong>
                 <span>Despachos rápidos desde Once</span>
               </div>
             </div>
-            <div className="beta-footer-feature-item">
+            <div className="beta-footer-feature-item reveal-child">
               <span className="feature-icon" aria-hidden="true">💬</span>
               <div>
                 <strong>Atención por WhatsApp</strong>
                 <span>Confirmación de stock en el momento</span>
               </div>
             </div>
-            <div className="beta-footer-feature-item">
+            <div className="beta-footer-feature-item reveal-child">
               <span className="feature-icon" aria-hidden="true">📍</span>
               <div>
                 <strong>Local en Once</strong>
@@ -567,7 +608,7 @@ export function BetaMarketplacePage() {
           </div>
         </div>
 
-        <div className="page-shell beta-footer-main">
+        <div className="page-shell beta-footer-main reveal-on-scroll">
           <div className="beta-footer-grid">
             <div className="beta-footer-col beta-footer-brand-col">
               <div className="beta-marketplace-brand">
