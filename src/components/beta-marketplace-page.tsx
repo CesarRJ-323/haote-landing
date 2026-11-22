@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type TouchEvent } from 'react';
 import { catalogCategories, catalogProducts } from '../data/catalog';
 import type { CatalogProduct } from '../data/catalog';
@@ -81,7 +82,8 @@ function BetaProductCard({
 }
 
 export function BetaMarketplacePage() {
-  const [query, setQuery] = useState('');
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState('');
   const [category, setCategory] = useState('Todos');
   const [added, setAdded] = useState<string | null>(null);
   const [cartQuantity, setCartQuantity] = useState(0);
@@ -142,9 +144,18 @@ export function BetaMarketplacePage() {
   }, [promoSlide, promoSlides.length]);
 
   const visibleProducts = useMemo(() => realPhotoProducts.filter((product) => {
-    const text = `${product.name} ${product.cleanName} ${product.category} ${product.pack}`.toLowerCase();
-    return (category === 'Todos' || product.category === category) && text.includes(query.trim().toLowerCase());
-  }), [category, query]);
+    return category === 'Todos' || product.category === category;
+  }), [category]);
+
+  const handleSearchSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    const trimmed = searchQuery.trim();
+    if (trimmed) {
+      router.push(`/catalogo?q=${encodeURIComponent(trimmed)}`);
+    } else {
+      router.push('/catalogo');
+    }
+  };
 
   useEffect(() => {
     if (!selectedProduct) return;
@@ -214,7 +225,23 @@ export function BetaMarketplacePage() {
       <section className="beta-marketplace-nav">
         <div className="page-shell beta-marketplace-nav-inner">
           <Link href="/" className="beta-marketplace-brand"><span>H</span><strong>HAOTE</strong><small>IMPORTADORA</small></Link>
-          <label className="beta-search"><span aria-hidden="true">⌕</span><input value={query} onChange={(event) => { setQuery(event.target.value); if (event.target.value.trim()) { setTimeout(() => document.getElementById('productos')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150); } }} placeholder="Buscar juguetes, personajes o categorías" aria-label="Buscar productos" /></label>
+          <form className="beta-search" onSubmit={handleSearchSubmit} role="search">
+            <button
+              type="submit"
+              className="beta-search-btn"
+              aria-label="Buscar productos en catálogo"
+              title="Buscar en catálogo"
+            >
+              <span aria-hidden="true">⌕</span>
+            </button>
+            <input
+              type="search"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              placeholder="Buscar juguetes, personajes o categorías"
+              aria-label="Buscar productos"
+            />
+          </form>
           <div className="beta-nav-actions"><Link href="/login" aria-label="Ir a mi cuenta"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5" /><path d="M5 20c.8-3.2 3.1-5 7-5s6.2 1.8 7 5" /></svg><span>Mi cuenta</span></Link><Link href="/carrito" className="beta-cart-link" aria-label={`Ir al carrito${cartQuantity ? `, ${cartQuantity} productos` : ''}`}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h2l2 12h10l2-8H7M10 21h.01M18 21h.01" /></svg><span>Pedido</span>{cartQuantity > 0 && <b className="beta-cart-count">{cartQuantity}</b>}</Link></div>
         </div>
       </section>
@@ -228,7 +255,6 @@ export function BetaMarketplacePage() {
               className={category === item ? 'is-active' : ''}
               onClick={() => {
                 setCategory(item);
-                setQuery('');
                 document.getElementById('productos')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }}
             >

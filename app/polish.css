@@ -1385,7 +1385,26 @@ body.beta-mode .beta-footer { display: block !important; }
 .beta-marketplace-brand strong { font: 800 1rem/1 var(--font-heading); letter-spacing: .04em; }
 .beta-marketplace-brand small { color: rgba(17,30,49,.75); font-size: .52rem; font-weight: 800; letter-spacing: .12em; }
 .beta-search { display: flex; align-items: center; gap: 10px; height: 46px; border: 1px solid rgba(17,30,49,.15); border-radius: 12px; background: white; padding: 0 14px; box-shadow: 0 2px 10px rgba(17,30,49,.08); }
-.beta-search span { color: var(--text-muted); font-size: 1.4rem; line-height: 1; }
+.beta-search-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0 !important;
+  background: transparent !important;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 1.4rem;
+  line-height: 1;
+  transition: color 150ms var(--ease), transform 150ms var(--ease);
+}
+.beta-search-btn:hover,
+.beta-search-btn:focus-visible {
+  color: var(--text-main);
+  transform: scale(1.15);
+}
+.beta-search span { color: inherit; font-size: 1.4rem; line-height: 1; }
 .beta-search input { width: 100%; border: 0; outline: 0; background: transparent; color: var(--text-main); font: inherit; font-size: .85rem; }
 .beta-nav-actions { display: flex; justify-content: flex-end; gap: 18px; }
 .beta-nav-actions a { display: inline-flex; align-items: center; gap: 6px; color: var(--text-main); font-size: .75rem; font-weight: 800; }
@@ -1395,9 +1414,7 @@ body.beta-mode .beta-footer { display: block !important; }
 .beta-category-nav {
   border-bottom: 0;
   background: var(--accent-sun);
-  position: sticky;
-  top: 0;
-  z-index: 90;
+  position: static;
   box-shadow: none;
 }
 .beta-category-inner {

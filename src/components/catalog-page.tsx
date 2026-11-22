@@ -10,9 +10,14 @@ export function CatalogPage() {
   const [sort, setSort] = useState('featured');
 
   useEffect(() => {
-    const requestedCategory = new URLSearchParams(window.location.search).get('categoria');
+    const params = new URLSearchParams(window.location.search);
+    const requestedCategory = params.get('categoria');
     if (requestedCategory && catalogCategories.includes(requestedCategory)) {
       setCategory(requestedCategory);
+    }
+    const requestedQuery = params.get('q') || params.get('busqueda') || params.get('buscar');
+    if (requestedQuery) {
+      setQuery(requestedQuery);
     }
   }, []);
 
@@ -22,14 +27,20 @@ export function CatalogPage() {
         .filter(
           (p) => {
             const normalizedQuery = query.trim().toLowerCase();
-            const searchableText = [p.name, p.cleanName, p.category, p.pack, p.badge]
-              .filter(Boolean)
-              .join(' ')
-              .toLowerCase();
+            if (!normalizedQuery) {
+              return category === 'Todos' || p.category === category;
+            }
+
+            const terms = normalizedQuery.split(/\s+/).filter(Boolean);
+            const matchesQuery = terms.every((term) =>
+              p.name.toLowerCase().includes(term) ||
+              p.cleanName.toLowerCase().includes(term) ||
+              p.category.toLowerCase().includes(term)
+            );
 
             return (
               (category === 'Todos' || p.category === category) &&
-              searchableText.includes(normalizedQuery)
+              matchesQuery
             );
           }
         )
@@ -67,9 +78,19 @@ export function CatalogPage() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Buscar por personaje, juguete o categoría..."
-              className="w-full h-11 pl-9 pr-4 rounded-xl border border-[var(--border-line)] bg-white text-sm text-[var(--text-main)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-coral-action)]"
+              className="w-full h-11 pl-9 pr-9 rounded-xl border border-[var(--border-line)] bg-white text-sm text-[var(--text-main)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-coral-action)]"
               aria-label="Buscar productos"
             />
+            {query && (
+              <button
+                type="button"
+                onClick={() => setQuery('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[var(--text-muted)] hover:text-[var(--text-main)] font-bold px-1.5 py-0.5 rounded"
+                aria-label="Limpiar búsqueda"
+              >
+                ✕
+              </button>
+            )}
           </div>
 
           <div className="flex items-center gap-3">
