@@ -214,14 +214,27 @@ export function BetaMarketplacePage() {
       <section className="beta-marketplace-nav">
         <div className="page-shell beta-marketplace-nav-inner">
           <Link href="/" className="beta-marketplace-brand"><span>H</span><strong>HAOTE</strong><small>IMPORTADORA</small></Link>
-          <label className="beta-search"><span aria-hidden="true">⌕</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Buscar juguetes, personajes o categorías" aria-label="Buscar productos" /></label>
+          <label className="beta-search"><span aria-hidden="true">⌕</span><input value={query} onChange={(event) => { setQuery(event.target.value); if (event.target.value.trim()) { setTimeout(() => document.getElementById('productos')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150); } }} placeholder="Buscar juguetes, personajes o categorías" aria-label="Buscar productos" /></label>
           <div className="beta-nav-actions"><Link href="/login" aria-label="Ir a mi cuenta"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5" /><path d="M5 20c.8-3.2 3.1-5 7-5s6.2 1.8 7 5" /></svg><span>Mi cuenta</span></Link><Link href="/carrito" className="beta-cart-link" aria-label={`Ir al carrito${cartQuantity ? `, ${cartQuantity} productos` : ''}`}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h2l2 12h10l2-8H7M10 21h.01M18 21h.01" /></svg><span>Pedido</span>{cartQuantity > 0 && <b className="beta-cart-count">{cartQuantity}</b>}</Link></div>
         </div>
       </section>
 
       <nav className="beta-category-nav" aria-label="Categorías rápidas">
         <div className="page-shell beta-category-inner">
-          {['Todos', ...catalogCategories.filter((item) => item !== 'Todos')].map((item) => <Link key={item} href={item === 'Todos' ? '/catalogo' : `/catalogo?categoria=${encodeURIComponent(item)}`} className={category === item ? 'is-active' : ''}>{item}</Link>)}
+          {['Todos', ...catalogCategories.filter((item) => item !== 'Todos')].map((item) => (
+            <button
+              key={item}
+              type="button"
+              className={category === item ? 'is-active' : ''}
+              onClick={() => {
+                setCategory(item);
+                setQuery('');
+                document.getElementById('productos')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
+            >
+              {item}
+            </button>
+          ))}
         </div>
       </nav>
 

@@ -1378,7 +1378,7 @@ body.beta-mode > aside { display: none; }
 body.beta-mode .beta-footer { display: block !important; }
 .beta-marketplace-bar { background: var(--text-main); color: #dfe7f0; font-size: .7rem; }
 .beta-marketplace-topline { display: flex; justify-content: space-between; gap: 16px; padding: 8px 24px; }
-.beta-marketplace-nav { position: sticky; top: 0; z-index: 30; border-bottom: 0; background: var(--accent-sun); }
+.beta-marketplace-nav { position: static; border-bottom: 0; background: var(--accent-sun); }
 .beta-marketplace-nav-inner { display: grid; grid-template-columns: 190px minmax(220px, 1fr) 170px; align-items: center; gap: 20px; min-height: 76px; }
 .beta-marketplace-brand { display: grid; grid-template-columns: 36px auto; grid-template-rows: 20px 12px; column-gap: 9px; align-items: center; color: var(--text-main); }
 .beta-marketplace-brand span { grid-row: 1 / span 2; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--accent-coral-action); color: white; font: 800 1.2rem/1 var(--font-heading); }
@@ -1409,7 +1409,8 @@ body.beta-mode .beta-footer { display: block !important; }
   scrollbar-width: none;
 }
 .beta-category-inner::-webkit-scrollbar { display: none; }
-.beta-category-inner a {
+.beta-category-inner button { border: none; background: none; cursor: pointer; font-family: inherit; }
+.beta-category-inner a, .beta-category-inner button {
   flex: 0 0 auto;
   padding: 7px 16px;
   border-radius: 999px;
@@ -1421,11 +1422,11 @@ body.beta-mode .beta-footer { display: block !important; }
   text-decoration: none;
   transition: background-color 180ms var(--ease), color 180ms var(--ease);
 }
-.beta-category-inner a:hover {
+.beta-category-inner a:hover, .beta-category-inner button:hover {
   background: rgba(0,0,0,.1);
   color: #1c2b3d;
 }
-.beta-category-inner a.is-active {
+.beta-category-inner a.is-active, .beta-category-inner button.is-active {
   background: #1c2b3d;
   color: var(--accent-sun);
   font-weight: 800;
@@ -1805,7 +1806,7 @@ body.beta-mode .beta-deal-btn {
   .beta-nav-actions { gap: 6px; }
   .beta-nav-actions a { padding: 6px; }
   .beta-category-inner { justify-content: flex-start; padding: 8px 10px; }
-  .beta-category-inner a { padding: 6px 12px; font-size: .72rem; }
+  .beta-category-inner a, .beta-category-inner button { padding: 6px 12px; font-size: .72rem; }
   .beta-promo-wrap {
     grid-template-columns: 1.05fr .95fr;
     height: 255px;
