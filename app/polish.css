@@ -1398,7 +1398,7 @@ body.beta-mode .beta-footer { display: block !important; }
   position: sticky;
   top: 0;
   z-index: 90;
-  box-shadow: 0 2px 10px rgba(0,0,0,.12);
+  box-shadow: none;
 }
 .beta-category-inner {
   display: flex;
