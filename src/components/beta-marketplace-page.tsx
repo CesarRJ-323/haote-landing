@@ -255,19 +255,21 @@ export function BetaMarketplacePage() {
               className="object-cover beta-promo-product"
             />
           </div>
-          <div className="beta-promo-dots">
-            {promoSlides.map((slide, index) => (
-              <button
-                type="button"
-                key={slide.title}
-                className={index === promoSlide ? 'is-active' : ''}
-                onClick={() => changePromo(index)}
-                aria-label={`Ver descuento ${index + 1}`}
-              />
-            ))}
-          </div>
         </div>
         <button type="button" className="beta-promo-arrow beta-promo-arrow-right" onClick={() => changePromo((promoSlide + 1) % promoSlides.length)} aria-label="Siguiente descuento"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg></button>
+
+        {/* Indicadores en el centro del hero (círculos) */}
+        <div className="beta-promo-dots">
+          {promoSlides.map((slide, index) => (
+            <button
+              type="button"
+              key={slide.title}
+              className={index === promoSlide ? 'is-active' : ''}
+              onClick={() => changePromo(index)}
+              aria-label={`Ver promoción ${index + 1}`}
+            />
+          ))}
+        </div>
       </section>
 
       <section className="page-shell beta-recommendations" aria-label="Productos destacados">
