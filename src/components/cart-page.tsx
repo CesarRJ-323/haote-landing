@@ -391,41 +391,44 @@ export function CartPage() {
               </Link>
             </div>
 
-            {/* Packs recomendados para empezar */}
+            {/* Packs recomendados con FOTOS REALES de depósito (no SVGs vectoriales) */}
             <div className="cart-recommended-section">
               <div className="cart-recommended-heading">
                 <span className="eyebrow">DESTACADOS</span>
-                <h3>🔥 Más vendidos para reventa:</h3>
+                <h3>🔥 Más pedidos en depósito Once:</h3>
               </div>
               <div className="cart-recommended-grid">
-                {catalogProducts.slice(0, 4).map((prod) => (
-                  <div key={prod.id} className="cart-rec-card">
-                    <div className="cart-rec-image">
-                      <Image
-                        src={prod.image}
-                        alt={prod.cleanName || prod.name}
-                        fill
-                        sizes="160px"
-                        className="object-contain p-2"
-                      />
-                    </div>
-                    <div className="cart-rec-info">
-                      <span className="cart-rec-category">{prod.category}</span>
-                      <strong className="cart-rec-name">{prod.cleanName || prod.name}</strong>
-                      <span className="cart-rec-pack">{prod.pack}</span>
-                      <div className="cart-rec-price-row">
-                        <span className="cart-rec-price">{prod.formattedPrice}</span>
-                        <button
-                          type="button"
-                          className="cart-rec-add-btn"
-                          onClick={() => addRecommended(prod)}
-                        >
-                          + Agregar
-                        </button>
+                {catalogProducts
+                  .filter((prod) => prod.image.endsWith('.jpeg'))
+                  .slice(0, 4)
+                  .map((prod) => (
+                    <div key={prod.id} className="cart-rec-card">
+                      <div className="cart-rec-image">
+                        <Image
+                          src={prod.image}
+                          alt={prod.cleanName || prod.name}
+                          fill
+                          sizes="160px"
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className="cart-rec-info">
+                        <span className="cart-rec-category">{prod.category}</span>
+                        <strong className="cart-rec-name">{prod.cleanName || prod.name}</strong>
+                        <span className="cart-rec-pack">{prod.pack}</span>
+                        <div className="cart-rec-price-row">
+                          <span className="cart-rec-price">{prod.formattedPrice}</span>
+                          <button
+                            type="button"
+                            className="cart-rec-add-btn"
+                            onClick={() => addRecommended(prod)}
+                          >
+                            + Agregar
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
               </div>
             </div>
           </div>
